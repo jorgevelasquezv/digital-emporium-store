@@ -1,7 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 export const ProfileMenu = ({ handleHiddenMenuUser, buttonMenuUser }) => {
+
+    const firebaseDataUser = useSelector(
+        (state) => state.users.firebaseDataUser
+    );
+
+    const avatar = `https://ui-avatars.com/api/?name=${firebaseDataUser.displayName.trim()}`;
+
     return (
         <div className="relative ml-3">
             <div>
@@ -17,7 +25,8 @@ export const ProfileMenu = ({ handleHiddenMenuUser, buttonMenuUser }) => {
                     <span className="sr-only">Open user menu</span>
                     <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={avatar}
                         alt="profile user"
                     />
                 </button>
