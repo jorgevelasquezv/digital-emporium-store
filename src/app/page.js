@@ -50,6 +50,9 @@ export default function Home() {
             </aside>
             {data ? (
                 <main className="container mx-auto mt-4">
+                    <h2 className="my-10 text-center text-7xl font-extrabold text-blue-800">
+                        Featured Products
+                    </h2>
                     <SectionProducts products={data} />
                 </main>
             ) : (
