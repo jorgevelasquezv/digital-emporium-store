@@ -4,7 +4,11 @@ import { getProducts } from '@/actions/productsActions';
 import { CarouselCustom } from '@/components/molecules/Carousel/CarouselCustom';
 import { Spinners } from '@/components/molecules/Spinners/Spinners';
 import { SectionProducts } from '@/components/organisms/SectionProducts/SectionProducts';
-import { setFirabaseAccesToken, setFirabaseDataUser, setIsAutenticate } from '@/redux/features/userSlice';
+import {
+    setFirabaseAccesToken,
+    setFirabaseDataUser,
+    setIsAutenticate,
+} from '@/app/GlobalRedux/features/userSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 

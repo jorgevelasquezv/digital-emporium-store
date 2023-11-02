@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 
 import { NavBarItemsDesktop } from '../../molecules/NavBarItems/NavBarItemsDesktop';
 import { NavBarItemsMobile } from '@/components/molecules/NavBarItems/NavBarItemsMobile';
@@ -9,6 +8,7 @@ import { ProfileMenu } from '@/components/molecules/ProfileMenu/ProfileMenu';
 import { MobileMenuButton } from '@/components/molecules/MobileMenuButton/MobileMenuButton';
 import { ShoppingCar } from '@/components/atoms/ShoppingCar/ShoppingCar';
 import { NavbarItemsRight } from '@/components/molecules/NavBarItems/NavbarItemsRight';
+import { useSelector } from 'react-redux';
 
 export const NavBar = () => {
     const itemsCenter = [
@@ -17,17 +17,13 @@ export const NavBar = () => {
         { name: 'Contact', url: '/contact', public: true },
     ];
 
-    const itemsRight = [
-        { name: 'Singin', url: '/signin', public: false },
-        { name: 'Register', url: '/register', public: false },
-        { name: 'Logout', url: '#', public: false },
-    ];
+    const isAutenticated = useSelector((state) => state.users.isAutenticated);
 
-    const [buttonMenuUser, setUserButton] = useState(false);
+    const [buttonMenuUser, setButtonMenuUser] = useState(false);
     const [buttonMobileMenu, setButtonMobileMenu] = useState(false);
 
     const handleHiddenMenuUser = () => {
-        setUserButton(!buttonMenuUser);
+        setButtonMenuUser(!buttonMenuUser);
     };
 
     const handleMobileMenu = () => {
@@ -44,12 +40,16 @@ export const NavBar = () => {
                     />
                     <NavBarItemsDesktop items={itemsCenter} />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                        <NavbarItemsRight items={itemsRight} />
-                        <ShoppingCar />
-                        <ProfileMenu
-                            handleHiddenMenuUser={handleHiddenMenuUser}
-                            buttonMenuUser={buttonMenuUser}
-                        />
+                        <NavbarItemsRight />
+                        {isAutenticated && (
+                            <>
+                                <ShoppingCar />
+                                <ProfileMenu
+                                    handleHiddenMenuUser={handleHiddenMenuUser}
+                                    buttonMenuUser={buttonMenuUser}
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

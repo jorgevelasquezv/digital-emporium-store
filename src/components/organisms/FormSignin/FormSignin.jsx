@@ -7,14 +7,15 @@ import {
     setFirabaseDataUser,
     setFirabaseAccesToken,
     setIsAutenticate,
-} from '@/redux/features/userSlice';
+} from '@/app/GlobalRedux/features/userSlice';
+import Link from 'next/link';
 
 export const FormSignin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
 
-    const { isAuthenticated } = useSelector((state) => state.users);
+    const isAuthenticated = useSelector((state) => state.users.isAutenticated);
 
     const dispatch = useDispatch();
 
@@ -41,13 +42,9 @@ export const FormSignin = () => {
 
         // else successful
         const { accessToken, displayName, uid } = result;
-        console.log({ accessToken, displayName, uid });
 
         dispatch(setIsAutenticate(true));
-        localStorage.setItem(
-            'isAuthenticated',
-            JSON.stringify(true)
-        );
+        localStorage.setItem('isAuthenticated', JSON.stringify(true));
         dispatch(setFirabaseAccesToken(accessToken));
         localStorage.setItem('firabaseAccesToken', JSON.stringify(accessToken));
         dispatch(setFirabaseDataUser({ email, displayName, uid }));
@@ -60,27 +57,8 @@ export const FormSignin = () => {
     };
 
     useEffect(() => {
-        dispatch(
-            setIsAutenticate(
-                JSON.parse(localStorage.getItem('isAuthenticated')) ||
-                    false
-            )
-        );
-        dispatch(
-            setFirabaseAccesToken(
-                JSON.parse(localStorage.getItem('firabaseAccesToken')) || undefined
-            )
-        );
-        dispatch(
-            setFirabaseDataUser(
-                JSON.parse(localStorage.getItem('firabaseDataUser')) ||
-                    undefined
-            )
-        );
-        console.log({isAuthenticated});
+        console.log(isAuthenticated);
         if (isAuthenticated) {
-            
-            console.log(JSON.parse(localStorage.getItem('isAuthenticated')));
             router.replace('/');
         }
     }, []);
@@ -189,19 +167,19 @@ export const FormSignin = () => {
                 </form>
                 <p className="text-center mt-3 text-[14px]">
                     Don't have an account?
-                    <a href="/signup" className="text-gray-600">
+                    <Link href="/signup" className="text-gray-600">
                         Create one
-                    </a>
+                    </Link>
                 </p>
                 <p className="text-center mt-3 text-[14px]">
                     By clicking continue, you agree to our
-                    <a href="/terms" className="text-gray-600">
+                    <Link href="/terms" className="text-gray-600">
                         Terms of Service
-                    </a>{' '}
+                    </Link>{' '}
                     and{' '}
-                    <a href="/privacy" className="text-gray-600">
+                    <Link href="/privacy" className="text-gray-600">
                         Privacy Policy
-                    </a>
+                    </Link>
                     .
                 </p>
             </article>
