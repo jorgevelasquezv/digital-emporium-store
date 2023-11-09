@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Search } from '../Search/Search';
 
 export const NavBarItemsMobile = ({ items }) => {
     const pathname = usePathname();
@@ -21,6 +22,7 @@ export const NavBarItemsMobile = ({ items }) => {
                     {name}
                 </Link>
             ))}
+            <Search site={'relative mx-auto text-gray-600 px-3 py-2'} />
         </div>
     );
 };

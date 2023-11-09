@@ -1,6 +1,5 @@
 'use client';
 
-import { getProducts } from '@/actions/productsActions';
 import { CarouselCustom } from '@/components/molecules/Carousel/CarouselCustom';
 import { Spinners } from '@/components/molecules/Spinners/Spinners';
 import { SectionProducts } from '@/components/organisms/SectionProducts/SectionProducts';
@@ -9,17 +8,22 @@ import {
     setFirabaseDataUser,
     setIsAutenticate,
 } from '@/app/GlobalRedux/features/userSlice';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    loadDataProducts,
+    setData,
+} from './GlobalRedux/features/productsSlice';
 
 export default function Home() {
-    const [data, setData] = useState(null);
+    const { featuredProducts, productsFound } = useSelector(
+        (state) => state.products
+    );
     const dispatch = useDispatch();
 
     const loadData = async () => {
-        await getProducts().then((products) => {
-            setData(products);
-        });
+        const { payload } = await dispatch(loadDataProducts());
+        dispatch(setData(payload));
     };
 
     useEffect(() => {
@@ -48,12 +52,12 @@ export default function Home() {
             <aside className="my-5">
                 <CarouselCustom />
             </aside>
-            {data ? (
+            {featuredProducts ? (
                 <main className="container mx-auto mt-4">
                     <h2 className="my-10 text-center text-7xl font-extrabold text-blue-800">
-                        Featured Products
+                        {productsFound.length > 0 ? 'Found Products' : 'Featured Products'}
                     </h2>
-                    <SectionProducts products={data} />
+                    <SectionProducts />
                 </main>
             ) : (
                 <Spinners />

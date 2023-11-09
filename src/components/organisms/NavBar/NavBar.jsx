@@ -9,6 +9,7 @@ import { MobileMenuButton } from '@/components/molecules/MobileMenuButton/Mobile
 import { ShoppingCar } from '@/components/atoms/ShoppingCar/ShoppingCar';
 import { NavbarItemsRight } from '@/components/molecules/NavBarItems/NavbarItemsRight';
 import { useSelector } from 'react-redux';
+import { Search } from '@/components/molecules/Search/Search';
 
 export const NavBar = () => {
     const itemsCenter = [
@@ -31,7 +32,7 @@ export const NavBar = () => {
     };
 
     return (
-        <nav className="bg-blue-800">
+        <nav className="bg-blue-800 sticky top-0">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                     <MobileMenuButton
@@ -40,6 +41,7 @@ export const NavBar = () => {
                     />
                     <NavBarItemsDesktop items={itemsCenter} />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        <Search />
                         <NavbarItemsRight />
                         {isAutenticated && (
                             <>
