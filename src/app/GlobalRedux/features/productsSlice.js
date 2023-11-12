@@ -30,6 +30,7 @@ export const loadDataProducts = createAsyncThunk(
     'products/loadDataProducts',
     async () => {
         const products = await getProducts();
+        setData(products)
         return products;
     }
 );

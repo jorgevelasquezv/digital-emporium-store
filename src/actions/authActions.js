@@ -6,7 +6,7 @@ import {
     updateProfile,
     signInWithEmailAndPassword,
     signOut,
-} from '../firebase/config-firebase';
+} from '../firebase/config';
 import { types } from '../types/types';
 
 export const googleLogin = () => {

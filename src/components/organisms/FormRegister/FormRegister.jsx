@@ -1,60 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
 
-import { auth, createUserWithEmailAndPassword, updateProfile } from '@/firebase/config';
+import { useRegister } from '@/hooks/useRegister';
 
 export const FormRegister = () => {
-    const [data, setData] = useState({
-        email: '',
-        password: '',
-        password2: '',
-        username: '',
-    });
-
+    const [handleChange, handleRegister, data] = useRegister();
     const { email, username, password, password2 } = data;
-    const handleChange = (e) => {
-        const value = e.target.value;
-        setData({ ...data, [e.target.name]: value });
-    };
-
-    const register = (email, password, username) => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(async ({ user }) => {
-                await updateProfile(auth.currentUser, {
-                    displayName: username,
-                });
-                const { uid, displayName, accesToken } = user;
-
-                //Pendiente cargar datos a store con reduxtoolkit para manejo de estado gobal
-                console.log({uid, displayName, accesToken});
-            })
-            .catch((error) => {
-                // Manejar error se da por que ya existe el email 
-                console.log(error);
-            });
-    };
-
-    const handleRegister = (e) => {
-        e.preventDefault();
-        if (
-            email.trim() === '' ||
-            !email.trim().includes('@', 1 - email.length) ||
-            !email.trim().includes('.', email.indexOf('@') + 1) ||
-            email.trim().slice(email.trim().indexOf('.')).length < 3
-        ) {
-            return;
-        }
-        if (
-            username.trim().length < 2 ||
-            password.trim().length < 6 ||
-            password.trim() !== password2.trim()
-        ) {
-            return;
-        }
-        register(email, password, username);
-    };
 
     return (
         <section className="max-w-[280px] mx-auto">
@@ -185,117 +137,16 @@ export const FormRegister = () => {
                 </p>
                 <p className="text-center mt-3 text-[14px]">
                     By clicking continue, you agree to our
-                    <a href="/terms" className="text-gray-600">
+                    <Link href="/terms" className="text-gray-600">
                         Terms of Service
-                    </a>{' '}
+                    </Link>{' '}
                     and{' '}
-                    <a href="/privacy" className="text-gray-600">
+                    <Link href="/privacy" className="text-gray-600">
                         Privacy Policy
-                    </a>
+                    </Link>
                     .
                 </p>
             </article>
         </section>
-        // <div className="mt-5">
-        //     <h1 className="text-gray-700 text-center text-sm font-bold mb-2">
-        //         Register
-        //     </h1>
-        //     <hr />
-
-        //     <div className="max-w-[280px] mx-auto mt-5">
-        //         <form
-        //             onSubmit={handleRegister}
-        //             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        //         >
-        //             <div className="mb-3">
-        //                 <div className="mb-4">
-        //                     <label
-        //                         htmlFor="icon_prefix2"
-        //                         className="block text-gray-700 text-sm font-bold mb-2"
-        //                     >
-        //                         Email
-        //                     </label>
-        //                     <input
-        //                         onChange={handleChange}
-        //                         value={email}
-        //                         id="icon_prefix2"
-        //                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        //                         type="email"
-        //                         name="email"
-        //                     />
-        //                 </div>
-        //                 <label
-        //                     htmlFor="icon_prefix3"
-        //                     className="block text-gray-700 text-sm font-bold mb-2"
-        //                 >
-        //                     Username
-        //                 </label>
-        //                 <div className="row mb-3">
-        //                     <input
-        //                         onChange={handleChange}
-        //                         value={username}
-        //                         id="icon_prefix3"
-        //                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        //                         type="text"
-        //                         name="username"
-        //                     />
-        //                 </div>
-
-        //                 <label
-        //                     htmlFor="icon_prefix4"
-        //                     className="block text-gray-700 text-sm font-bold mb-2"
-        //                 >
-        //                     Password
-        //                 </label>
-        //                 <div className="row mb-3">
-        //                     <input
-        //                         onChange={handleChange}
-        //                         value={password}
-        //                         id="icon_prefix4"
-        //                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        //                         type="password"
-        //                         name="password"
-        //                     />
-        //                 </div>
-        //                 <label
-        //                     htmlFor="icon_prefix5 "
-        //                     className="block text-gray-700 text-sm font-bold mb-2"
-        //                 >
-        //                     Confirm Password
-        //                 </label>
-        //                 <div className="row mb-3">
-        //                     <input
-        //                         onChange={handleChange}
-        //                         value={password2}
-        //                         id="icon_prefix5"
-        //                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        //                         type="password"
-        //                         name="password2"
-        //                     />
-        //                 </div>
-        //             </div>
-
-        //             <button
-        //                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        //                 type="submit"
-        //                 style={{
-        //                     backgroundColor: '#4285F4',
-        //                     borderColor: '#4285F4',
-        //                 }}
-        //             >
-        //                 Enviar
-        //             </button>
-
-        //             <hr />
-
-        //             <Link
-        //                 href="/login"
-        //                 className="text-gray-700 text-sm font-bold mb-2"
-        //             >
-        //                 Login to your account
-        //             </Link>
-        //         </form>
-        //     </div>
-        // </div>
     );
 };

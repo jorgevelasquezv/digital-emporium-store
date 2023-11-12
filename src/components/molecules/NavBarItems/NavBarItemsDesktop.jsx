@@ -1,6 +1,7 @@
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import React from 'react';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
+import { usePathname } from 'next/navigation';
 
 export const NavBarItemsDesktop = ({ items }) => {
     const pathname = usePathname();
@@ -39,4 +40,8 @@ export const NavBarItemsDesktop = ({ items }) => {
             </div>
         </div>
     );
+};
+
+NavBarItemsDesktop.propTypes = {
+    items: PropTypes.array,
 };

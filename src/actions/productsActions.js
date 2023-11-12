@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const getProducts =  () => {
+export const getProducts = () => {
     return  axios
         .get(
-            'https://ba825ade-3855-4f75-963e-669f2e33697a.mock.pstmn.io/products'
+            'http://localhost:8000/products'
         )
         .then(({ data }) => {
             const { products } = data;
@@ -17,7 +17,7 @@ export const getProducts =  () => {
 export const getProductById = (id) => {
     return axios
         .get(
-            'https://ba825ade-3855-4f75-963e-669f2e33697a.mock.pstmn.io/products'
+            'http://localhost:8000/products'
         )
         .then(({ data }) => {
             const { products } = data;
@@ -33,7 +33,7 @@ export const getProductById = (id) => {
 export const getCategories =  () => {
     return axios
         .get(
-            'https://ba825ade-3855-4f75-963e-669f2e33697a.mock.pstmn.io/products'
+            'http://localhost:8000/products'
         )
         .then(({ data }) => {
             const { products } = data;

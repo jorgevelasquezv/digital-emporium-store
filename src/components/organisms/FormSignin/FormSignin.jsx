@@ -1,67 +1,16 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    emailAndPasswordLogin,
-    setFirabaseDataUser,
-    setFirabaseAccesToken,
-    setIsAutenticate,
-} from '@/app/GlobalRedux/features/userSlice';
+
+import { useSignin } from '@/hooks/useSignin';
 import Link from 'next/link';
 
 export const FormSignin = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const router = useRouter();
-
-    const isAuthenticated = useSelector((state) => state.users.isAutenticated);
-
-    const dispatch = useDispatch();
-
-    const handleChangeInputEmail = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handleCahngeInputPassword = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleForm = async (event) => {
-        event.preventDefault();
-        const response = await dispatch(
-            emailAndPasswordLogin({ email, password })
-        );
-
-        const { result, error } = response.payload;
-
-        if (error) {
-            // Crear ventana emergente con error de autenticación
-            alert('Authentication Error. Email or Password incorrect');
-        }
-
-        // else successful
-        const { accessToken, displayName, uid } = result;
-
-        dispatch(setIsAutenticate(true));
-        localStorage.setItem('isAuthenticated', JSON.stringify(true));
-        dispatch(setFirabaseAccesToken(accessToken));
-        localStorage.setItem('firabaseAccesToken', JSON.stringify(accessToken));
-        dispatch(setFirabaseDataUser({ email, displayName, uid }));
-        localStorage.setItem(
-            'firabaseDataUser',
-            JSON.stringify({ email, displayName, uid })
-        );
-
-        return router.replace('/');
-    };
-
-    useEffect(() => {
-        console.log(isAuthenticated);
-        if (isAuthenticated) {
-            router.replace('/');
-        }
-    }, []);
+    const [
+        handleChangeInputEmail,
+        handleCahngeInputPassword,
+        handleForm,
+        email,
+        password,
+    ] = useSignin();
 
     return (
         <section className="max-w-[280px] mx-auto">
@@ -147,16 +96,18 @@ export const FormSignin = () => {
                 <span className="mb-2 text-gray-900">Or</span>
                 <form onSubmit={handleForm}>
                     <input
-                        type="text"
+                        type="email"
                         className="w-full px-6 py-3 mb-2 border border-slate-600 rounded-lg font-medium text-black "
                         placeholder="Email"
                         onChange={handleChangeInputEmail}
+                        value={email}
                     />
                     <input
                         type="password"
                         className="w-full px-6 py-3 mb-2 border border-slate-600 rounded-lg font-medium text-black "
                         placeholder="Password"
                         onChange={handleCahngeInputPassword}
+                        value={password}
                     />
                     <button
                         type="submit"

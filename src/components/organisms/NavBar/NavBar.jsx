@@ -14,7 +14,7 @@ import { Search } from '@/components/molecules/Search/Search';
 export const NavBar = () => {
     const itemsCenter = [
         { name: 'Home', url: '/', public: true },
-        { name: 'Products', url: '/products', public: true },
+        { name: 'Advanced Search', url: '/products', public: true },
         { name: 'Contact', url: '/contact', public: true },
     ];
 

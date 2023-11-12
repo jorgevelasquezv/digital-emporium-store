@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProductsFound } from '@/app/GlobalRedux/features/productsSlice';
@@ -8,23 +8,30 @@ export const Search = ({
 }) => {
     const dispatch = useDispatch();
 
-    const [productSearch, setProductSearch] = useState('')
+    const [productSearch, setProductSearch] = useState('');
     const { data } = useSelector((state) => state.products);
 
     const hanldeOnchangeSearch = (e) => {
         setProductSearch(e.target.value);
+        if (e.target.value === '') {
+            dispatch(setProductsFound([]));
+        } else {
+            handleSearch();
+        }
     };
 
     const handleSearch = () => {
-        if (productSearch && productSearch !== '') {
-            const dataFiltered = [...data.filter((prod) =>
-                prod.name
-                    .toLowerCase()
-                    .includes(productSearch.toLowerCase())
-            )];
-            dispatch(setProductsFound(dataFiltered));
-        } else {
-            dispatch(setProductsFound([]));
+        const dataFiltered = [
+            ...data.filter((prod) =>
+                prod.name.toLowerCase().includes(productSearch.toLowerCase())
+            ),
+        ];
+        dispatch(setProductsFound(dataFiltered));
+    };
+
+    const handleOnKeyDowndSearch = (e) => {
+        if (e.key == 'Enter') {
+            handleSearch();
         }
     };
 
@@ -38,8 +45,9 @@ export const Search = ({
                     placeholder="Search"
                     value={productSearch}
                     onChange={hanldeOnchangeSearch}
+                    onKeyDown={handleOnKeyDowndSearch}
                 />
-                <ul className="absolute left-0 z-10 w-72 origin-top-right rounded-md bg-white bg-opacity-90">
+                <ul className="absolute left-0 z-10 w-72 origin-top-right rounded-md bg-white bg-opacity-90 hidden">
                     <li>hsahsgh</li>
                     <li>hsahsgh</li>
                     <li>hsahsgh</li>

@@ -11,18 +11,18 @@ import {
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    loadDataProducts,
     setData,
 } from './GlobalRedux/features/productsSlice';
+import { getProducts } from '@/actions/productsActions';
 
 export default function Home() {
-    const { featuredProducts, productsFound } = useSelector(
+    const { data, productsFound } = useSelector(
         (state) => state.products
     );
     const dispatch = useDispatch();
 
     const loadData = async () => {
-        const { payload } = await dispatch(loadDataProducts());
+        const  payload  = await getProducts();
         dispatch(setData(payload));
     };
 
@@ -52,7 +52,7 @@ export default function Home() {
             <aside className="my-5">
                 <CarouselCustom />
             </aside>
-            {featuredProducts ? (
+            {data?.length > 0 ? (
                 <main className="container mx-auto mt-4">
                     <h2 className="my-10 text-center text-7xl font-extrabold text-blue-800">
                         {productsFound.length > 0 ? 'Found Products' : 'Featured Products'}
