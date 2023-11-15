@@ -11,19 +11,21 @@ import {
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    setCategories,
     setData,
 } from './GlobalRedux/features/productsSlice';
 import { getProducts } from '@/actions/productsActions';
 
 export default function Home() {
-    const { data, productsFound } = useSelector(
+    const { data, search } = useSelector(
         (state) => state.products
     );
     const dispatch = useDispatch();
 
     const loadData = async () => {
-        const  payload  = await getProducts();
-        dispatch(setData(payload));
+        const  {products, categories}  = await getProducts();
+        dispatch(setData(products));
+        dispatch(setCategories(categories));
     };
 
     useEffect(() => {
@@ -55,7 +57,7 @@ export default function Home() {
             {data?.length > 0 ? (
                 <main className="container mx-auto mt-4">
                     <h2 className="my-10 text-center text-7xl font-extrabold text-blue-800">
-                        {productsFound.length > 0 ? 'Found Products' : 'Featured Products'}
+                        {search.length > 0 ? 'Found Products' : 'Featured Products'}
                     </h2>
                     <SectionProducts />
                 </main>

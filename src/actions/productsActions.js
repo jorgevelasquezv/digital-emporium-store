@@ -6,8 +6,7 @@ export const getProducts = () => {
             'http://localhost:8000/products'
         )
         .then(({ data }) => {
-            const { products } = data;
-            return products;
+            return data;
         })
         .catch((error) =>
             console.error('Error al obtener los datos de la API:', error)

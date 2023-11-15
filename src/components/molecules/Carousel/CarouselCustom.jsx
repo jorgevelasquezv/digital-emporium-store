@@ -16,7 +16,7 @@ export const CarouselCustom = () => {
         cssEase: 'linear',
     };
     return (
-        <Slider {...settings}>
+        <Slider {...settings} className='z-0'>
             <div className="w-full h-64 object-cover">
                 <img
                     src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6553/6553055_sd.jpg"
