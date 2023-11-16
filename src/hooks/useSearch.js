@@ -1,17 +1,23 @@
 import {
+    setProductsBySearch,
     setProductsFound,
     setSearch,
 } from '@/app/GlobalRedux/features/productsSlice';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useSearch = () => {
     const dispatch = useDispatch();
 
-    const { data, search, productsFound } = useSelector(
+    const { data } = useSelector(
         (state) => state.products
     );
+    
+    const pathName = usePathname().split('/')[1];
 
+    const router = useRouter();
+    
     const [searchWord, setSearchWord] = useState('')
 
     const handleOnchangeSearch = (e) => {
@@ -22,14 +28,12 @@ export const useSearch = () => {
         const dataFiltered = data.filter((prod) =>
             prod.name.toLowerCase().includes(searchWord.toLowerCase())
         );
-        console.log('Ejecutando handle search', {
-            search,
-            productsFound,
-            dataFiltered,
-            data,
-        });
         dispatch(setProductsFound(dataFiltered));
+        dispatch(setProductsBySearch(dataFiltered));
         dispatch(setSearch(searchWord))
+        if (pathName !== '') {
+            router.push('/')
+        }
     };
 
     const handleOnKeyDowndSearch = (e) => {

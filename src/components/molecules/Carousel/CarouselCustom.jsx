@@ -16,43 +16,51 @@ export const CarouselCustom = () => {
         cssEase: 'linear',
     };
     return (
-        <Slider {...settings} className='z-0'>
-            <div className="w-full h-64 object-cover">
-                <img
-                    src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6553/6553055_sd.jpg"
-                    alt=""
-                />
-            </div>
-            <div className="w-full h-64 object-cover">
-                <img
-                    src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6541/6541789_sd.jpg"
-                    alt=""
-                />
-            </div>
-            <div className="w-full h-64 object-cover">
-                <img
-                    src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6551/6551125_sd.jpg"
-                    alt=""
-                />
-            </div>
-            <div className="w-full h-64 object-cover">
-                <img
-                    src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6455/6455131_sd.jpg"
-                    alt=""
-                />
-            </div>
-            <div className="w-full h-64 object-cover">
-                <img
-                    src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6521/6521174_sd.jpg"
-                    alt=""
-                />
-            </div>
-            <div className="w-full h-64 object-cover">
-                <img
-                    src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6443/6443300_sd.jpg"
-                    alt=""
-                />
-            </div>
-        </Slider>
+        <section className="flex items-center justify-center">
+            <Slider {...settings} className="-z-10 w-11/12 self-center">
+                <div className="w-24 h-48" style={{ width: 100 }}>
+                    <img
+                        className="h-40"
+                        src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6553/6553055_sd.jpg"
+                        alt=""
+                    />
+                </div>
+                <div className="w-24 h-48" style={{ width: 100 }}>
+                    <img
+                        className="h-40"
+                        src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6541/6541789_sd.jpg"
+                        alt=""
+                    />
+                </div>
+                <div className="w-24 h-48" style={{ width: 100 }}>
+                    <img
+                        className="h-40"
+                        src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6551/6551125_sd.jpg"
+                        alt=""
+                    />
+                </div>
+                <div className="w-24 h-48" style={{ width: 100 }}>
+                    <img
+                        className="h-40"
+                        src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6455/6455131_sd.jpg"
+                        alt=""
+                    />
+                </div>
+                <div className="w-24 h-48" style={{ width: 100 }}>
+                    <img
+                        className="h-40"
+                        src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6521/6521174_sd.jpg"
+                        alt=""
+                    />
+                </div>
+                <div className="w-24 h-48" style={{ width: 100 }}>
+                    <img
+                        className="h-40"
+                        src="https://pisces.bbystatic.com/prescaled/500/500/image2/BestBuy_US/images/products/6443/6443300_sd.jpg"
+                        alt=""
+                    />
+                </div>
+            </Slider>
+        </section>
     );
 };

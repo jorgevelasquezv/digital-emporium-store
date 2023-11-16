@@ -1,28 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    setFirabaseAccesToken,
-    setFirabaseDataUser,
-    setIsAutenticate,
-} from '@/app/GlobalRedux/features/userSlice';
+import { useLogout } from '@/hooks/useLogout';
 
 export const NavbarItemsRight = () => {
-    const isAutenticated = useSelector((state) => state.users.isAutenticated);
-
-    const dispatch = useDispatch();
-
-    const pathname = usePathname();
-
-    const handleLogout = () => {
-        dispatch(setIsAutenticate(false));
-        localStorage.setItem('isAuthenticated', JSON.stringify(false));
-        dispatch(setFirabaseAccesToken(undefined));
-        localStorage.removeItem('firabaseAccesToken');
-        dispatch(setFirabaseDataUser(undefined));
-        localStorage.removeItem('firabaseDataUser');
-    };
+    const {isAutenticated, pathname, handleLogout} = useLogout();
 
     const classNameActive =
         'text-white hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium';

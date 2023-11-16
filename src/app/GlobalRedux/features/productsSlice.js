@@ -8,6 +8,9 @@ export const productsSlice = createSlice({
         categories: [],
         featuredProducts: [],
         productsFound: [],
+        productsBySearch: [],
+        productsFilteredByCategory: [],
+        productsFilteredByPrice: [],
         search: '',
     },
     reducers: {
@@ -15,7 +18,7 @@ export const productsSlice = createSlice({
             state.data = action.payload;
         },
         setCategories: (state, action) => {
-            state.categories = action.payload
+            state.categories = action.payload;
         },
         setFeaturedProducts: (state, action) => {
             state.featuredProducts = action.payload;
@@ -23,14 +26,31 @@ export const productsSlice = createSlice({
         setProductsFound: (state, action) => {
             state.productsFound = action.payload;
         },
+        setProductsBySearch: (state, action) => {
+            state.productsBySearch = action.payload;
+        },
+        setProductsFilterByCategory: (state, action) => {
+            state.productsFilteredByCategory = action.payload;
+        },
+        setProductsFilteredByPrice: (state, action) => {
+            state.productsByPrice = action.payload;
+        },
         setSearch: (state, action) => {
             state.search = action.payload;
-        }
+        },
     },
 });
 
-export const { setData, setCategories, setFeaturedProducts, setProductsFound, setSearch } =
-    productsSlice.actions;
+export const {
+    setData,
+    setCategories,
+    setFeaturedProducts,
+    setProductsFound,
+    setProductsBySearch,
+    setProductsFilteredByPrice,
+    setProductsFilterByCategory,
+    setSearch,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;
 
@@ -38,7 +58,7 @@ export const loadDataProducts = createAsyncThunk(
     'products/loadDataProducts',
     async () => {
         const products = await getProducts();
-        setData(products)
+        setData(products);
         return products;
     }
 );

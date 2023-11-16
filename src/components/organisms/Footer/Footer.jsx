@@ -6,9 +6,9 @@ export const Footer = () => {
         <footer className="bottom-0 left-0 z-20 w-full p-4 bg-blue-800 border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 mt-3">
             <span className="text-sm text-white sm:text-center">
                 © 2023&nbsp;
-                <a href="https://digitalemporiumstore.com/" className="hover:underline">
+                <Link href="https://digitalemporiumstore.com/" className="hover:underline">
                     Digital Emporium Store™
-                </a>
+                </Link>
                 . All Rights Reserved.
             </span>
             <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-white sm:mt-0">

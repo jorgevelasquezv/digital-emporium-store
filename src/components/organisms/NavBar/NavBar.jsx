@@ -11,6 +11,7 @@ import { NavbarItemsRight } from '@/components/molecules/NavBarItems/NavbarItems
 import { useSelector } from 'react-redux';
 import { Search } from '@/components/molecules/Search/Search';
 import { AdvanceSearch } from './AdvanceSearch';
+import { usePathname } from 'next/navigation';
 
 export const NavBar = () => {
     const itemsCenter = [
@@ -32,6 +33,7 @@ export const NavBar = () => {
         setButtonMobileMenu(!buttonMobileMenu);
     };
 
+    const pathName = usePathname().split('/')[1];
     return (
         <>
             <nav className="bg-blue-800 sticky top-0 z-10">
@@ -67,7 +69,7 @@ export const NavBar = () => {
                     <NavBarItemsMobile items={itemsCenter} />
                 </div>
             </nav>
-            {search.length > 0 && <AdvanceSearch />}
+            {(search.length > 0 && pathName == '') && <AdvanceSearch />}
         </>
     );
 };

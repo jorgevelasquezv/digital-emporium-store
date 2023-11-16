@@ -10,7 +10,7 @@ export const Search = ({
         handleOnchangeSearch,
         handleOnKeyDowndSearch,
     ] = useSearch();
-    
+
     return (
         <div className={site}>
             <div>

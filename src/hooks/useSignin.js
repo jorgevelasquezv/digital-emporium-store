@@ -48,7 +48,6 @@ export const useSignin = () => {
             return;
         }
 
-        // else successful
         const { accessToken, displayName, uid } = result;
 
         dispatch(setIsAutenticate(true));
