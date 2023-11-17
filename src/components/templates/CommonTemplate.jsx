@@ -14,5 +14,5 @@ export const CommonTemplate = ({ children }) => {
 };
 
 CommonTemplate.propTypes = {
-    children: PropTypes.func.isRequired,
+    children: PropTypes.object.isRequired,
 };

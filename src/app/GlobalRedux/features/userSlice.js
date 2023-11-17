@@ -14,6 +14,16 @@ export const userSlices = createSlice({
         firabaseAccesToken: undefined,
         firebaseTokenResponse: undefined,
         firebaseDataUser: undefined,
+        userInformation: {
+            firstName: '',
+            lastName: '',
+            country: '',
+            address: '',
+            city: '',
+            province: '',
+            zipPostal: '',
+        },
+        userCar: {},
     },
     reducers: {
         setIsAutenticate: (state, action) => {
@@ -28,6 +38,12 @@ export const userSlices = createSlice({
         setFirabaseDataUser: (state, action) => {
             state.firebaseDataUser = action.payload;
         },
+        setUserInformation: (state, action) => {
+            state.userInformation = action.payload;
+        },
+        setUserCar: (state, action) => {
+            state.userCar = action.payload;
+        },
     },
 });
 
@@ -36,6 +52,8 @@ export const {
     setFirabaseAccesToken,
     setFirebaseTokenResponse,
     setFirabaseDataUser,
+    setUserInformation,
+    setUserCar,
 } = userSlices.actions;
 
 export default userSlices.reducer;
@@ -48,14 +66,6 @@ export const googleLogin = () => {
         });
     };
 };
-
-// export const emailAndPasswordLogin = (email, password) => {
-//     return (dispatch) => {
-//         signInWithEmailAndPassword(auth, email, password).then(({ user }) =>
-//             dispatch(login(user.uid, user.displayName))
-//         );
-//     };
-// };
 
 export const emailAndPasswordLogin = createAsyncThunk(
     'users/emailAndPasswordLogin',
@@ -81,25 +91,5 @@ export const register = (email, password, username) => {
             .catch((error) => {
                 console.log(error);
             });
-    };
-};
-
-export const login = (uid, displayName) => {
-    return {
-        type: types.login,
-        payload: {
-            uid,
-            displayName,
-        },
-    };
-};
-
-export const logout = () => {
-    return async (dispatch) => {
-        await signOut(auth);
-
-        dispatch({
-            type: types.logout,
-        });
     };
 };

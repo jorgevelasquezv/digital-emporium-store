@@ -1,7 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 export const ShoppingCar = () => {
+    const { isAutenticated, userCar } = useSelector((state) => state.users);
+
+    const products = Object.values(userCar);
+    const totalProducts =
+        products.length > 0
+            ? products
+                  .map(({ quantity }) => quantity)
+                  .reduce((acc, curr) => acc + curr)
+            : 0;
+
     return (
         <Link
             href="/user/car"
@@ -10,6 +21,11 @@ export const ShoppingCar = () => {
         >
             <span className="absolute -inset-1.5" />
             <span className="sr-only">View car</span>
+            {totalProducts > 0 && (
+                <span className="absolute top-1 left-3 flex h-4 w-4 items-center justify-center rounded-full border bg-white text-sm font-medium text-gray-500 shadow sm:-top-2 sm:-right-2">
+                    {totalProducts}
+                </span>
+            )}
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={24}

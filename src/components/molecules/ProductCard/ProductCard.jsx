@@ -1,23 +1,42 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { setUserCar } from '@/app/GlobalRedux/features/userSlice';
 
 export const ProductCard = ({ product }) => {
-    const isAuthenticated = useSelector((state) => state.users.isAutenticated);
+    const dispatch = useDispatch();
+
+    const { isAutenticated, userCar } = useSelector((state) => state.users);
+
+    const [quantity, setQuantity] = useState(1);
 
     const router = useRouter();
 
     const { id, name, description, stock, price, url } = product;
 
     const handleButtonAddCar = () => {
-        if (!isAuthenticated) {
+        if (!isAutenticated) {
             router.replace('/signin');
+            return
         }
+        // Pendiente logica para acumumular productos cuando se da agregar uno ya existente entonces se debe aumentar la cantidad 
+        dispatch(setUserCar({...userCar, [id]:{...product, quantity}}))
+        localStorage.setItem(
+            'userCar',
+            JSON.stringify({ ...userCar, [id]: { ...product, quantity } })
+        );
+    };
+
+    const handleSetQuantity = (e) => {
+        const { id } = e.target;
+        id === 'plus' && setQuantity(quantity + 1);
+        id === 'minus' && quantity > 1 && setQuantity(quantity - 1);
     };
 
     return (
-        <article className="bg-white p-4 rounded-lg shadow-md">
+        <article className="bg-white p-4 rounded-lg shadow-md ">
             <Link href={`/product/${id}`}>
                 <img
                     src={url}
@@ -38,12 +57,68 @@ export const ProductCard = ({ product }) => {
                 <span className="text-lg text-gray-500">{stock}</span>
             </p>
             <p className="text-blue-600 font-semibold mt-2">Price ${price}</p>
-            <button
-                className="bg-blue-600 text-white px-4 py-2 rounded-md mt-4"
-                onClick={handleButtonAddCar}
-            >
-                Añadir al carrito
-            </button>
+            <div className="flex flex-col ">
+                <div className="inline-flex items-center mt-2">
+                    <button
+                        className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
+                        onClick={handleSetQuantity}
+                        id="minus"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            id="minus"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M20 12H4"
+                                id="minus"
+                            />
+                        </svg>
+                    </button>
+                    <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none">
+                        {quantity}
+                    </div>
+                    <button
+                        className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
+                        onClick={handleSetQuantity}
+                        id="plus"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            id="plus"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 4v16m8-8H4"
+                                id="plus"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <button
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md mt-4"
+                    onClick={handleButtonAddCar}
+                >
+                    Añadir al carrito
+                </button>
+            </div>
         </article>
     );
+};
+
+ProductCard.propTypes = {
+    product: PropTypes.object.isRequired,
 };

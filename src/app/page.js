@@ -7,6 +7,8 @@ import {
     setFirabaseAccesToken,
     setFirabaseDataUser,
     setIsAutenticate,
+    setUserCar,
+    setUserInformation,
 } from '@/app/GlobalRedux/features/userSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,6 +45,18 @@ export default function Home() {
         dispatch(
             setFirabaseDataUser(
                 JSON.parse(localStorage.getItem('firabaseDataUser')) ||
+                    undefined
+            )
+        );
+        dispatch(
+            setUserInformation(
+                JSON.parse(localStorage.getItem('userInformation')) ||
+                    undefined
+            )
+        );
+        dispatch(
+            setUserCar(
+                JSON.parse(localStorage.getItem('userCar')) ||
                     undefined
             )
         );
