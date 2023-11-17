@@ -36,12 +36,12 @@ export const ProductCard = ({ product }) => {
     };
 
     return (
-        <article className="bg-white p-4 rounded-lg shadow-md ">
-            <Link href={`/product/${id}`}>
+        <article className="bg-white p-4 rounded-lg shadow-md border">
+            <Link href={`/product/${id}`} className="flex items-center justify-center">
                 <img
                     src={url}
                     alt={name}
-                    className="w-full h-64 object-cover"
+                    className="h-48 w-auto max-w-full "
                 />
             </Link>
             <h2 className="text-lg font-semibold mt-2 truncate">{name}</h2>

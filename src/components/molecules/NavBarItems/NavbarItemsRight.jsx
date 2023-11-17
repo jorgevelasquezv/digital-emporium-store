@@ -23,7 +23,7 @@ export const NavbarItemsRight = () => {
                                         : classNameInactive
                                 }
                             >
-                                Singin
+                                Signin
                             </Link>
                             <Link
                                 href="/register"

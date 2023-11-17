@@ -118,7 +118,7 @@ export const FormSignin = () => {
                 </form>
                 <p className="text-center mt-3 text-[14px]">
                     Don't have an account?
-                    <Link href="/signup" className="text-gray-600">
+                    <Link href="/register" className="text-gray-600">
                         Create one
                     </Link>
                 </p>
