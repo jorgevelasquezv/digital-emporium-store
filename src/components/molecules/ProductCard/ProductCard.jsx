@@ -19,14 +19,20 @@ export const ProductCard = ({ product }) => {
     const handleButtonAddCar = () => {
         if (!isAutenticated) {
             router.replace('/signin');
-            return
+            return;
         }
-        // Pendiente logica para acumumular productos cuando se da agregar uno ya existente entonces se debe aumentar la cantidad 
-        dispatch(setUserCar({...userCar, [id]:{...product, quantity}}))
-        localStorage.setItem(
-            'userCar',
-            JSON.stringify({ ...userCar, [id]: { ...product, quantity } })
-        );
+        
+        const quantityFound = userCar[id]?.quantity || 0;
+        
+        const productToAdd = { [id]: { ...product, quantity: quantityFound + quantity } };
+
+        const carProducts = { ...userCar, ...productToAdd };
+
+        console.log(carProducts);
+
+        dispatch(setUserCar({...carProducts}));
+        
+        localStorage.setItem('userCar', JSON.stringify({ ...carProducts }));
     };
 
     const handleSetQuantity = (e) => {
@@ -37,14 +43,15 @@ export const ProductCard = ({ product }) => {
 
     return (
         <article className="bg-white p-4 rounded-lg shadow-md border">
-            <Link href={`/product/${id}`} className="flex items-center justify-center">
-                <img
-                    src={url}
-                    alt={name}
-                    className="h-48 w-auto max-w-full "
-                />
+            <Link
+                href={`/product/${id}`}
+                className="flex items-center justify-center"
+            >
+                <img src={url} alt={name} className="h-48 w-auto max-w-full " />
             </Link>
-            <h2 className="text-lg font-semibold mt-2 truncate">{name}</h2>
+            <h2 className="text-lg font-semibold mt-2 truncate">
+                {name.split(' - ')[1]}
+            </h2>
             <p className="text-gray-500 truncate">{description}</p>
             <Link
                 className="text-blue-600 text-lg font-semibold mt-2"
