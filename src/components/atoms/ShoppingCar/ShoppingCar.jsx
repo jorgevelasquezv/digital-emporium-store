@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 export const ShoppingCar = () => {
-    const { isAutenticated, userCar } = useSelector((state) => state.users);
+    const { userCar } = useSelector((state) => state.users);
 
     const products = Object.values(userCar);
     const totalProducts =

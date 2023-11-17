@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Search } from '../Search/Search';
@@ -25,4 +25,8 @@ export const NavBarItemsMobile = ({ items }) => {
             <Search site={'relative mx-auto text-gray-600 px-3 py-2'} />
         </div>
     );
+};
+
+NavBarItemsMobile.propTypes = {
+    items: PropTypes.array.isRequired,
 };

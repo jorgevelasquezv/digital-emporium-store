@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import signIn from '@/firebase/auth/signin';
 import {
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
     signInWithPopup,
 } from 'firebase/auth';
 

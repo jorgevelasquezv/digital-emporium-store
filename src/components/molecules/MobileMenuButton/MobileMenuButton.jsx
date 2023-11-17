@@ -1,6 +1,6 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
-export const MobileMenuButton = ({handleMobileMenu, buttonMobileMenu}) => {
+export const MobileMenuButton = ({ handleMobileMenu, buttonMobileMenu }) => {
     return (
         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
@@ -58,4 +58,9 @@ export const MobileMenuButton = ({handleMobileMenu, buttonMobileMenu}) => {
             </button>
         </div>
     );
+};
+
+MobileMenuButton.propTypes = {
+    handleMobileMenu: PropTypes.func.isRequired,
+    buttonMobileMenu: PropTypes.bool.isRequired,
 };

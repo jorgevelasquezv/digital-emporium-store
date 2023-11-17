@@ -1,21 +1,15 @@
 "use client"
 
-// import { onAuthStateChanged } from 'firebase-app/client';
-// import { onAuthStateChanged } from 'firebase/auth';
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 const WithPrivateRoute = ({ children }) => {
     const router = useRouter();
     const isAutenticated = useSelector((state) => state.users.isAutenticated);
 
-    useEffect(() => {
-        // onAuthStateChanged((user) => {
-        //     if (!user) {
-        //         router.push('/login');
-        //     }
-        // });
-        
+    useEffect(() => {        
             if (!isAutenticated) {
                 router.push('/login');
             }
@@ -23,5 +17,9 @@ const WithPrivateRoute = ({ children }) => {
 
     return <>{children}</>;
 };
+
+WithPrivateRoute.propTypes = {
+    children: PropTypes.object.isRequired
+}
 
 export default WithPrivateRoute;

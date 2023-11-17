@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 export const CharacteristicProductCard = ({ product }) => {
     const {
@@ -44,4 +44,8 @@ export const CharacteristicProductCard = ({ product }) => {
             </button>
         </article>
     );
+};
+
+CharacteristicProductCard.propTypes = {
+    product: PropTypes.object.isRequired,
 };
