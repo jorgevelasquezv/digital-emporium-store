@@ -14,7 +14,7 @@ export default function Car() {
     const subTotalPrice =
         products.length > 0
             ? products
-                  .map(({ price, quantity }) => price * quantity)
+                  .map(({ price, quantity }) => Math.round((price * quantity)*100)/100)
                   .reduce((acc, curr) => acc + curr)
             : 0;
 
@@ -92,8 +92,11 @@ export default function Car() {
                                                             <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
                                                                 <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
                                                                     {`$${
-                                                                        price *
-                                                                        quantity
+                                                                        Math.round(
+                                                                            price *
+                                                                                quantity *
+                                                                                100
+                                                                        ) / 100
                                                                     }`}
                                                                 </p>
                                                             </div>

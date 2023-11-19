@@ -10,18 +10,19 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useSearch = () => {
     const dispatch = useDispatch();
 
-    const { data } = useSelector(
-        (state) => state.products
-    );
-    
+    const { data } = useSelector((state) => state.products);
+
     const pathName = usePathname().split('/')[1];
 
     const router = useRouter();
-    
-    const [searchWord, setSearchWord] = useState('')
+
+    const [searchWord, setSearchWord] = useState('');
 
     const handleOnchangeSearch = (e) => {
-        setSearchWord(e.target.value)
+        setSearchWord(e.target.value);
+        if (e.target.value === '') {
+            dispatch(setSearch(''));
+        }
     };
 
     const handleSearch = () => {
@@ -30,9 +31,9 @@ export const useSearch = () => {
         );
         dispatch(setProductsFound(dataFiltered));
         dispatch(setProductsBySearch(dataFiltered));
-        dispatch(setSearch(searchWord))
+        dispatch(setSearch(searchWord));
         if (pathName !== '') {
-            router.push('/')
+            router.push('/');
         }
     };
 
@@ -41,5 +42,10 @@ export const useSearch = () => {
             handleSearch();
         }
     };
-    return [searchWord, handleSearch, handleOnchangeSearch, handleOnKeyDowndSearch];
+    return [
+        searchWord,
+        handleSearch,
+        handleOnchangeSearch,
+        handleOnKeyDowndSearch,
+    ];
 };

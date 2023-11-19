@@ -28,8 +28,6 @@ export const ProductCard = ({ product }) => {
 
         const carProducts = { ...userCar, ...productToAdd };
 
-        console.log(carProducts);
-
         dispatch(setUserCar({...carProducts}));
         
         localStorage.setItem('userCar', JSON.stringify({ ...carProducts }));
