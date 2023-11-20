@@ -3,65 +3,11 @@
 import { CarouselCustom } from '@/components/molecules/Carousel/CarouselCustom';
 import { Spinners } from '@/components/molecules/Spinners/Spinners';
 import { SectionProducts } from '@/components/organisms/SectionProducts/SectionProducts';
-import {
-    setFirabaseAccesToken,
-    setFirabaseDataUser,
-    setIsAutenticate,
-    setUserCar,
-    setUserInformation,
-} from '@/app/GlobalRedux/features/userSlice';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    setCategories,
-    setData,
-} from './GlobalRedux/features/productsSlice';
-import { getProducts } from '@/actions/productsActions';
+
+import { useLoadSession } from '@/hooks/useLoadSession';
 
 export default function Home() {
-    const { data, search } = useSelector(
-        (state) => state.products
-    );
-    const dispatch = useDispatch();
-
-    const loadData = async () => {
-        const  {products, categories}  = await getProducts();
-        dispatch(setData(products));
-        dispatch(setCategories(categories));
-    };
-
-    useEffect(() => {
-        dispatch(
-            setIsAutenticate(
-                JSON.parse(localStorage.getItem('isAuthenticated')) || false
-            )
-        );
-        dispatch(
-            setFirabaseAccesToken(
-                JSON.parse(localStorage.getItem('firabaseAccesToken')) ||
-                    undefined
-            )
-        );
-        dispatch(
-            setFirabaseDataUser(
-                JSON.parse(localStorage.getItem('firabaseDataUser')) ||
-                    undefined
-            )
-        );
-        dispatch(
-            setUserInformation(
-                JSON.parse(localStorage.getItem('userInformation')) ||
-                    undefined
-            )
-        );
-        dispatch(
-            setUserCar(
-                JSON.parse(localStorage.getItem('userCar')) ||
-                    undefined
-            )
-        );
-        loadData();
-    }, []);
+    const { data, search } = useLoadSession();
 
     return (
         <>

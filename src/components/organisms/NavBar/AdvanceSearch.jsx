@@ -17,7 +17,6 @@ export const AdvanceSearch = () => {
     const dropCategories = [
         ...categories.map((category) => ({ name: category, value: true })),
     ];
-
     const priceList = () => {
         const priceRangeList = [
             ...new Set(productsBySearch.map((product) => product.price)),
@@ -45,6 +44,8 @@ export const AdvanceSearch = () => {
     const [showPriceDropdown, setShowPriceDropdown] = useState(false);
 
     const [categoryValues, setCategoryValues] = useState(dropCategories);
+
+    const [categoryAll, setCategoryAll] = useState(true);
 
     const handleShowCategoryDropdown = () => {
         setShowCategoryDropdown(!showCategoryDropdown);
@@ -103,6 +104,17 @@ export const AdvanceSearch = () => {
         dispatch(setProductsFound(productsByPrice));
     };
 
+    const handleCategoryAll = () => {
+        setCategoryAll(!categoryAll);
+        setCategoryValues(
+            categoryValues.map((category) => {
+                category.value = !categoryAll;
+                return category;
+            })
+        );
+        handleCategoryValues('');
+    };
+
     return (
         <nav className="bg-blue-800 sticky top-16 z-0">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -150,6 +162,21 @@ To: "transform opacity-0 scale-95"
                                     className="p-3 space-y-3 text-sm text-gray-700 h-48 overflow-y-auto"
                                     aria-labelledby="dropdownCheckboxButton"
                                 >
+                                    <li>
+                                        <div className="flex items-center hover:bg-gray-200">
+                                            <label className="ms-2 text-sm font-medium text-gray-900 w-48 flex items-start">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={categoryAll}
+                                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mr-1"
+                                                    onChange={handleCategoryAll}
+                                                />
+                                                <span className="text-gray-900 cursor-pointer">
+                                                    All
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </li>
                                     {categoryValues.map(
                                         ({ name, value }, index) => (
                                             <li key={`${name}-${index + 1}`}>

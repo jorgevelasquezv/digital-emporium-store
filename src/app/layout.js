@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { Inter } from 'next/font/google';
-import './globals.css';
 import { CommonTemplate } from '@/components/templates/CommonTemplate';
 import { Providers } from '@/app/GlobalRedux/providers';
+
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,11 +13,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+    
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={'min-h-screen flex flex-col'}>
                 <Providers>
-                    <CommonTemplate>{children}</CommonTemplate>
+                    <CommonTemplate className="min-h-screen flex-grow">
+                        {children}
+                    </CommonTemplate>
                 </Providers>
             </body>
         </html>

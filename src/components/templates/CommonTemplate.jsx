@@ -6,8 +6,9 @@ export const CommonTemplate = ({ children }) => {
     return (
         <>
             <NavBar />
-
-            {children}
+            <main className='flex-grow'>
+                {children}
+            </main>
             <Footer />
         </>
     );

@@ -2,7 +2,6 @@
 
 import { setUserCar } from '@/app/GlobalRedux/features/userSlice';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Car() {
@@ -14,7 +13,10 @@ export default function Car() {
     const subTotalPrice =
         products.length > 0
             ? products
-                  .map(({ price, quantity }) => Math.round((price * quantity)*100)/100)
+                  .map(
+                      ({ price, quantity }) =>
+                          Math.round(price * quantity * 100) / 100
+                  )
                   .reduce((acc, curr) => acc + curr)
             : 0;
 
@@ -29,17 +31,36 @@ export default function Car() {
         localStorage.setItem('userCar', JSON.stringify({ ...carProducts }));
     };
 
-    useEffect(() => {
-        if (!isAutenticated) {
-            router.replace('/signin');
-        }
-    }, [isAutenticated]);
+    const handleSetQuantity = (e, idProduct) => {
+        const { id } = e.target;
+
+        const carProducts = { ...userCar };
+        const produductToModify = { ...carProducts[idProduct] };
+        const { quantity } = produductToModify;
+
+        produductToModify.quantity =
+            id === 'plus'
+                ? quantity + 1
+                : id === 'minus' && quantity > 1
+                ? quantity - 1
+                : quantity;
+        dispatch(
+            setUserCar({
+                ...carProducts,
+                [idProduct]: { ...produductToModify },
+            })
+        );
+    };
+
+    if (!isAutenticated) {
+        router.replace('/');
+    }
 
     return (
         <section className="bg-gray-100 py-12 sm:py-16 lg:py-20">
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-center">
-                    <h1 className="text-2xl font-semibold text-gray-900">
+                    <h1 className="text-7xl font-extrabold text-blue-700">
                         Your Cart
                     </h1>
                 </div>
@@ -101,6 +122,71 @@ export default function Car() {
                                                                 </p>
                                                             </div>
                                                         </div>
+
+                                                        <div className="inline-flex items-center mt-2">
+                                                            <button
+                                                                className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
+                                                                onClick={(e) =>
+                                                                    handleSetQuantity(
+                                                                        e,
+                                                                        id
+                                                                    )
+                                                                }
+                                                                id="minus"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    className="h-6 w-4"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke="currentColor"
+                                                                    id="minus"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth={
+                                                                            2
+                                                                        }
+                                                                        d="M20 12H4"
+                                                                        id="minus"
+                                                                    />
+                                                                </svg>
+                                                            </button>
+                                                            <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none">
+                                                                {quantity}
+                                                            </div>
+                                                            <button
+                                                                className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
+                                                                onClick={(e) =>
+                                                                    handleSetQuantity(
+                                                                        e,
+                                                                        id
+                                                                    )
+                                                                }
+                                                                id="plus"
+                                                            >
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    className="h-6 w-4"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke="currentColor"
+                                                                    id="plus"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth={
+                                                                            2
+                                                                        }
+                                                                        d="M12 4v16m8-8H4"
+                                                                        id="plus"
+                                                                    />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+
                                                         <div className="absolute top-0 right-0 flex sm:bottom-0 sm:top-auto">
                                                             <button
                                                                 type="button"
@@ -139,7 +225,7 @@ export default function Car() {
                                 <div className="flex items-center justify-between">
                                     <p className="text-gray-400">Subtotal</p>
                                     <p className="text-lg font-semibold text-gray-900">
-                                        ${subTotalPrice}
+                                        ${Math.round(subTotalPrice * 100) / 100}
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-between">
@@ -157,13 +243,14 @@ export default function Car() {
                                     <span className="text-xs font-normal text-gray-400">
                                         USD
                                     </span>{' '}
-                                    {totalPrice}
+                                    {Math.round(totalPrice * 100) / 100}
                                 </p>
                             </div>
                             <div className="mt-6 text-center">
                                 <button
                                     type="button"
                                     className="group inline-flex w-full items-center justify-center rounded-md bg-orange-500 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
+                                    onClick={() => router.push('/user/order')}
                                 >
                                     Place Order
                                     <svg
