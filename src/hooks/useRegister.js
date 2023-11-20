@@ -1,13 +1,16 @@
-import { setFirabaseAccesToken, setFirabaseDataUser, setIsAutenticate } from "@/app/GlobalRedux/features/userSlice";
-import { auth } from "@/firebase/config";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
+import {
+    setFirabaseAccesToken,
+    setFirabaseDataUser,
+    setIsAutenticate,
+} from '@/app/GlobalRedux/features/userSlice';
+import { auth } from '@/firebase/config';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 export const useRegister = () => {
-
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -33,23 +36,11 @@ export const useRegister = () => {
                 const { uid, displayName, accessToken } = user;
 
                 dispatch(setIsAutenticate(true));
-                localStorage.setItem('isAuthenticated', JSON.stringify(true));
                 dispatch(setFirabaseAccesToken(accessToken));
-                localStorage.setItem(
-                    'firabaseAccesToken',
-                    JSON.stringify(accessToken)
-                );
                 dispatch(setFirabaseDataUser({ email, displayName, uid }));
-                localStorage.setItem(
-                    'firabaseDataUser',
-                    JSON.stringify({ email, displayName, uid })
-                );
-
                 return router.replace('/');
             })
-            .catch((err) => {
-                // Manejar error se da por que ya existe el email
-                console.log(err);
+            .catch(() => {
                 setData({
                     email: '',
                     password: '',
@@ -57,7 +48,7 @@ export const useRegister = () => {
                     username: '',
                 });
                 Swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'error',
                     title: 'There is already an account with this email',
                     showConfirmButton: true,
@@ -95,4 +86,4 @@ export const useRegister = () => {
     };
 
     return [handleChange, handleRegister, data];
-}
+};

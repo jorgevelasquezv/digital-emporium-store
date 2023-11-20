@@ -65,14 +65,6 @@ export default function Profile() {
             showConfirmButton: true,
             timer: 3000,
         });
-        localStorage.setItem(
-            'firabaseDataUser',
-            JSON.stringify(firebaseDataUser)
-        );
-        localStorage.setItem(
-            'userInformation',
-            JSON.stringify(userInformation)
-        );
     };
 
     return (

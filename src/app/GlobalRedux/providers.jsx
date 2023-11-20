@@ -7,9 +7,9 @@ import { store } from '@/app/GlobalRedux/store';
 import PropTypes from 'prop-types';
 
 export const Providers = ({ children }) => {
-    return <Provider store={store}> {children}</Provider>;
+    return <Provider store={store}>{children}</Provider>;
 };
 
 Providers.propTypes = {
-    children: PropTypes.array.isRequired
-}
+    children: PropTypes.array.isRequired,
+};

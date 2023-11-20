@@ -28,7 +28,6 @@ export default function Car() {
         const carProducts = { ...userCar };
         delete carProducts[id];
         dispatch(setUserCar({ ...carProducts }));
-        localStorage.setItem('userCar', JSON.stringify({ ...carProducts }));
     };
 
     const handleSetQuantity = (e, idProduct) => {

@@ -29,8 +29,6 @@ export const ProductCard = ({ product }) => {
         const carProducts = { ...userCar, ...productToAdd };
 
         dispatch(setUserCar({...carProducts}));
-        
-        localStorage.setItem('userCar', JSON.stringify({ ...carProducts }));
     };
 
     const handleSetQuantity = (e) => {

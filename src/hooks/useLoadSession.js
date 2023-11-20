@@ -1,13 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '@/actions/productsActions';
 import { setCategories, setData } from '@/app/GlobalRedux/features/productsSlice';
-import {
-    setFirabaseAccesToken,
-    setFirabaseDataUser,
-    setIsAutenticate,
-    setUserCar,
-    setUserInformation,
-} from '@/app/GlobalRedux/features/userSlice';
 import { useEffect } from 'react';
 
 export const useLoadSession = () => {
@@ -21,31 +14,6 @@ export const useLoadSession = () => {
     };
 
     useEffect(() => {
-        dispatch(
-            setIsAutenticate(
-                JSON.parse(localStorage.getItem('isAuthenticated')) || false
-            )
-        );
-        dispatch(
-            setFirabaseAccesToken(
-                JSON.parse(localStorage.getItem('firabaseAccesToken')) ||
-                    undefined
-            )
-        );
-        dispatch(
-            setFirabaseDataUser(
-                JSON.parse(localStorage.getItem('firabaseDataUser')) ||
-                    undefined
-            )
-        );
-        dispatch(
-            setUserInformation(
-                JSON.parse(localStorage.getItem('userInformation')) || undefined
-            )
-        );
-        dispatch(
-            setUserCar(JSON.parse(localStorage.getItem('userCar')) || undefined)
-        );
         loadData();
     }, []);
 

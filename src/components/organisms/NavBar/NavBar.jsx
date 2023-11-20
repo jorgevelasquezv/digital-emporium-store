@@ -12,6 +12,9 @@ import { useSelector } from 'react-redux';
 import { Search } from '@/components/molecules/Search/Search';
 import { AdvanceSearch } from './AdvanceSearch';
 import { usePathname } from 'next/navigation';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { persistor } from '@/app/GlobalRedux/store';
+import { NavBarItemsRightDefault } from '@/components/molecules/NavBarItems/NavBarItemsRightDefault';
 
 export const NavBar = () => {
     const itemsCenter = [
@@ -46,18 +49,21 @@ export const NavBar = () => {
                         <NavBarItemsDesktop items={itemsCenter} />
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                             <Search />
-                            <NavbarItemsRight />
-                            {isAutenticated && (
-                                <>
-                                    <ShoppingCar />
-                                    <ProfileMenu
-                                        handleHiddenMenuUser={
-                                            handleHiddenMenuUser
-                                        }
-                                        buttonMenuUser={buttonMenuUser}
-                                    />
-                                </>
-                            )}
+                            <PersistGate loading={<NavBarItemsRightDefault/>} persistor={persistor}>
+                            
+                                <NavbarItemsRight />
+                                {isAutenticated && (
+                                    <>
+                                        <ShoppingCar />
+                                        <ProfileMenu
+                                            handleHiddenMenuUser={
+                                                handleHiddenMenuUser
+                                            }
+                                            buttonMenuUser={buttonMenuUser}
+                                        />
+                                    </>
+                                )}
+                            </PersistGate>
                         </div>
                     </div>
                 </div>

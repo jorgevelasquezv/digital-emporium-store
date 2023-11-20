@@ -35,10 +35,6 @@ const PlaceOrder = () => {
                 zipPostal,
             })
         );
-        localStorage.setItem(
-            'userInformation',
-            JSON.stringify(userInformation)
-        );
         router.back();
     };
 

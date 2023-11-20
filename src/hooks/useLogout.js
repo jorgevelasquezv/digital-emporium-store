@@ -16,14 +16,11 @@ export const useLogout = () => {
         logout()
             .then(() => {
                 dispatch(setIsAutenticate(false));
-                localStorage.setItem('isAuthenticated', JSON.stringify(false));
                 dispatch(setFirabaseAccesToken(undefined));
-                localStorage.removeItem('firabaseAccesToken');
                 dispatch(setFirabaseDataUser(undefined));
-                localStorage.removeItem('firabaseDataUser');
                 router.replace('/');
                 Swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
                     title: 'Successfully logged out',
                     showConfirmButton: true,

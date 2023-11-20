@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { CharacteristicProductCard } from '@/components/molecules/CharacteristicProductCard/CharacteristicProductCard';
 import { getProductById } from '@/actions/productsActions';
 import { Spinner } from '@/components/atoms/Spinner/Spinner';
@@ -27,6 +28,10 @@ const ProductCharacteristic = ({ params }) => {
             )}
         </section>
     );
+};
+
+ProductCharacteristic.propTypes = {
+    params: PropTypes.object.isRequired,
 };
 
 export default ProductCharacteristic;
