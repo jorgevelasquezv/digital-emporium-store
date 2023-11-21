@@ -6,14 +6,12 @@ const {
     setFirabaseDataUser,
     emailAndPasswordLogin,
 } = require('@/app/GlobalRedux/features/userSlice');
-const { useRouter } = require('next/navigation');
 const { useState } = require('react');
 const { useDispatch } = require('react-redux');
 
 export const useSignin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const router = useRouter();
 
     const dispatch = useDispatch();
 
@@ -51,8 +49,6 @@ export const useSignin = () => {
         dispatch(setIsAutenticate(true));
         dispatch(setFirabaseAccesToken(accessToken));
         dispatch(setFirabaseDataUser({ email, displayName, uid }));
-
-        // return router.replace('/');
     };
     return [
         handleChangeInputEmail,

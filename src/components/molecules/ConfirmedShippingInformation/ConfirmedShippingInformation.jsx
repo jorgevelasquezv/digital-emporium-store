@@ -1,15 +1,54 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 export const ConfirmedShippingInformation = () => {
+    const [paymentMethods, setPaymentMethods] = useState({
+        payPal: true,
+        pse: false,
+        creditCard: false,
+    });
+
+    const { payPal, pse, creditCard } = paymentMethods;
     const { userInformation } = useSelector((state) => state.users);
 
     const { firstName, lastName, country, address, city, province, zipPostal } =
         userInformation;
 
-    const payPal =
+    const payPalImage =
         'https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg';
 
-    const pse = 'https://www.pse.com.co/image/layout_icon?img_id=1202326';
+    const pseImage = 'https://www.pse.com.co/image/layout_icon?img_id=1202326';
+
+    const creditCardIamge =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQThGG-7Ohohn2gZ3LVNk-0uhjOEg29k-dTkg&usqp=CAU';
+
+    const handleChangePaymentMethod = (e) => {
+        const name = e.target.name;
+        const value = paymentMethods[name];
+        setPaymentMethods({
+            ...{
+                payPal: false,
+                pse: false,
+                creditCard: false,
+            },
+            [name]: !value,
+        });
+    };
+
+    const handlePaymentMethod = () => {
+        const activePaymentMethod = Object.entries(paymentMethods)
+            .filter(([_, value]) => value)
+            .map(([item]) => item);
+        
+        Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: `The payment functionality by ${activePaymentMethod} will soon be enabled`,
+            showConfirmButton: true,
+            timer: 5000,
+        });
+    };
 
     return (
         <>
@@ -68,12 +107,14 @@ export const ConfirmedShippingInformation = () => {
                         <input
                             type="radio"
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mr-1"
+                            name="payPal"
                             // value={'name'}
-                            // checked={'value'}
+                            checked={payPal}
+                            onChange={handleChangePaymentMethod}
                         />
                         <img
                             className="h-8 max-w-full rounded-lg mt-2"
-                            src={payPal}
+                            src={payPalImage}
                             alt={'payPal'}
                         />
                     </label>
@@ -83,13 +124,32 @@ export const ConfirmedShippingInformation = () => {
                         <input
                             type="radio"
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mr-1"
+                            name="pse"
                             // value={'name'}
-                            // checked={'value'}
+                            checked={pse}
+                            onChange={handleChangePaymentMethod}
                         />
                         <img
                             className="h-12 max-w-full rounded-lg"
-                            src={pse}
+                            src={pseImage}
                             alt={'pse'}
+                        />
+                    </label>
+                </div>
+                <div className="my-1 flex items-center justify-center">
+                    <label className="">
+                        <input
+                            type="radio"
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 mr-1"
+                            name="creditCard"
+                            // value={'name'}
+                            checked={creditCard}
+                            onChange={handleChangePaymentMethod}
+                        />
+                        <img
+                            className="h-12 max-w-full rounded-lg mt-1"
+                            src={creditCardIamge}
+                            alt={'creditCard'}
                         />
                     </label>
                 </div>
@@ -97,7 +157,7 @@ export const ConfirmedShippingInformation = () => {
             <button
                 type="button"
                 className="group inline-flex w-full items-center justify-center rounded-md bg-blue-500 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-blue-800"
-                onClick={() => router.push('/user/order')}
+                onClick={handlePaymentMethod}
             >
                 Make Payment
                 <svg
