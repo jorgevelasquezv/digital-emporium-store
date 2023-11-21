@@ -6,16 +6,19 @@ import { FormSignin } from '@/components/organisms/FormSignin/FormSignin';
 import { useLoadSession } from '@/hooks/useLoadSession';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistor } from '../GlobalRedux/store';
+import { useEffect } from 'react';
 
 const Signin = () => {
     useLoadSession();
     const { isAutenticated } = useSelector((state) => state.users);
     const router = useRouter();
 
-    if (isAutenticated) {
+    useEffect(() => {
+      if (isAutenticated) {
         router.replace('/');
-        return;
     }
+    }, [isAutenticated])
+    
     return (
         <PersistGate loading={null} persistor={persistor}>
             <FormSignin />;

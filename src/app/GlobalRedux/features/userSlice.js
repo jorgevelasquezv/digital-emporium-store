@@ -1,10 +1,7 @@
 import { auth, googleAuthProvider } from '@/firebase/config';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import signIn from '@/firebase/auth/signin';
-import {
-    createUserWithEmailAndPassword,
-    signInWithPopup,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 export const userSlices = createSlice({
     name: 'users',
@@ -23,6 +20,7 @@ export const userSlices = createSlice({
             zipPostal: '',
         },
         userCar: {},
+        confirmedShippingInformation: false,
     },
     reducers: {
         setIsAutenticate: (state, action) => {
@@ -43,6 +41,9 @@ export const userSlices = createSlice({
         setUserCar: (state, action) => {
             state.userCar = action.payload;
         },
+        setConfirmedShippingInformation: (state, action) => {
+            state.confirmedShippingInformation = action.payload;
+        },
     },
 });
 
@@ -53,6 +54,7 @@ export const {
     setFirabaseDataUser,
     setUserInformation,
     setUserCar,
+    setConfirmedShippingInformation,
 } = userSlices.actions;
 
 export default userSlices.reducer;

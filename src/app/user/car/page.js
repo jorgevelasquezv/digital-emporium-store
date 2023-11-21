@@ -1,12 +1,14 @@
 'use client';
 
 import { setUserCar } from '@/app/GlobalRedux/features/userSlice';
+import { ConfirmedShippingInformation } from '@/components/molecules/ConfirmedShippingInformation/ConfirmedShippingInformation';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Car() {
     const dispatch = useDispatch();
-    const { isAutenticated, userCar } = useSelector((state) => state.users);
+    const { isAutenticated, userCar, confirmedShippingInformation } =
+        useSelector((state) => state.users);
     const router = useRouter();
     const products = Object.values(userCar);
 
@@ -246,27 +248,33 @@ export default function Car() {
                                 </p>
                             </div>
                             <div className="mt-6 text-center">
-                                <button
-                                    type="button"
-                                    className="group inline-flex w-full items-center justify-center rounded-md bg-orange-500 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
-                                    onClick={() => router.push('/user/order')}
-                                >
-                                    Place Order
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="group-hover:ml-8 ml-4 h-6 w-6 transition-all"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
+                                {confirmedShippingInformation ? (
+                                    <ConfirmedShippingInformation />
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className="group inline-flex w-full items-center justify-center rounded-md bg-orange-500 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
+                                        onClick={() =>
+                                            router.push('/user/order')
+                                        }
                                     >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                        />
-                                    </svg>
-                                </button>
+                                        Place Order
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="group-hover:ml-8 ml-4 h-6 w-6 transition-all"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            strokeWidth={2}
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                            />
+                                        </svg>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

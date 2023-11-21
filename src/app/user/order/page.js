@@ -1,7 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserInformation } from '@/app/GlobalRedux/features/userSlice';
+import {
+    setConfirmedShippingInformation,
+    setUserInformation,
+} from '@/app/GlobalRedux/features/userSlice';
 import { useRouter } from 'next/navigation';
 
 const PlaceOrder = () => {
@@ -35,6 +38,7 @@ const PlaceOrder = () => {
                 zipPostal,
             })
         );
+        dispatch(setConfirmedShippingInformation(true));
         router.back();
     };
 

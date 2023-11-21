@@ -1,8 +1,13 @@
-import { setFirabaseAccesToken, setFirabaseDataUser, setIsAutenticate } from "@/app/GlobalRedux/features/userSlice";
-import logout from "@/firebase/auth/logout";
-import { usePathname, useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
+import {
+    setConfirmedShippingInformation,
+    setFirabaseAccesToken,
+    setFirabaseDataUser,
+    setIsAutenticate,
+} from '@/app/GlobalRedux/features/userSlice';
+import logout from '@/firebase/auth/logout';
+import { usePathname, useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 export const useLogout = () => {
     const isAutenticated = useSelector((state) => state.users.isAutenticated);
@@ -18,6 +23,7 @@ export const useLogout = () => {
                 dispatch(setIsAutenticate(false));
                 dispatch(setFirabaseAccesToken(undefined));
                 dispatch(setFirabaseDataUser(undefined));
+                dispatch(setConfirmedShippingInformation(false));
                 router.replace('/');
                 Swal.fire({
                     position: 'center',
@@ -30,5 +36,5 @@ export const useLogout = () => {
             .catch((err) => console.log(err));
     };
 
-    return {isAutenticated, pathname, handleLogout};
-}
+    return { isAutenticated, pathname, handleLogout };
+};

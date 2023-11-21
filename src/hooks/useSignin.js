@@ -52,7 +52,7 @@ export const useSignin = () => {
         dispatch(setFirabaseAccesToken(accessToken));
         dispatch(setFirabaseDataUser({ email, displayName, uid }));
 
-        return router.replace('/');
+        // return router.replace('/');
     };
     return [
         handleChangeInputEmail,
