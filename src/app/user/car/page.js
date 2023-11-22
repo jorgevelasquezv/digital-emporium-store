@@ -2,6 +2,7 @@
 
 import { setUserCar } from '@/app/GlobalRedux/features/userSlice';
 import { persistor } from '@/app/GlobalRedux/store';
+import { KeepShopping } from '@/components/atoms/KeepShopping/KeepShopping';
 import { Spinner } from '@/components/atoms/Spinner/Spinner';
 import { ConfirmedShippingInformation } from '@/components/molecules/ConfirmedShippingInformation/ConfirmedShippingInformation';
 import { useRouter } from 'next/navigation';
@@ -73,7 +74,7 @@ export default function Car() {
                         </h1>
                     </div>
                     {/* Para menor tamaño max-w-md */}
-                    <div className="mx-auto mt-8  md:mt-12">
+                    <div className="max-w-6xl mx-auto mt-8  md:mt-12">
                         <div className="rounded-3xl bg-white shadow-lg">
                             <div className="px-4 py-6 sm:px-8 sm:py-10">
                                 <div className="flow-root">
@@ -119,7 +120,7 @@ export default function Car() {
                                                                     </p>
                                                                 </div>
                                                                 <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                                                                    <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
+                                                                    <p className="shrink-0 w-20 text-base font-extrabold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">
                                                                         {`$${
                                                                             Math.round(
                                                                                 price *
@@ -239,7 +240,7 @@ export default function Car() {
                                         <p className="text-gray-400">
                                             Subtotal
                                         </p>
-                                        <p className="text-lg font-semibold text-gray-900">
+                                        <p className="text-lg font-extrabold text-gray-900">
                                             $
                                             {Math.round(subTotalPrice * 100) /
                                                 100}
@@ -249,7 +250,7 @@ export default function Car() {
                                         <p className="text-gray-400">
                                             Shipping
                                         </p>
-                                        <p className="text-lg font-semibold text-gray-900">
+                                        <p className="text-lg font-extrabold text-gray-900">
                                             ${shipping}
                                         </p>
                                     </div>
@@ -258,40 +259,46 @@ export default function Car() {
                                     <p className="text-sm font-medium text-gray-900">
                                         Total
                                     </p>
-                                    <p className="text-2xl font-semibold text-gray-900">
-                                        <span className="text-xs font-normal text-gray-400">
+                                    <p className="text-2xl font-extrabold text-gray-900">
+                                        <span className="text-xs font-extrabold text-gray-400">
                                             USD
                                         </span>{' '}
                                         {Math.round(totalPrice * 100) / 100}
                                     </p>
                                 </div>
+
                                 <div className="mt-6 text-center">
                                     {confirmedShippingInformation ? (
                                         <ConfirmedShippingInformation />
                                     ) : (
-                                        <button
-                                            type="button"
-                                            className="group inline-flex w-full items-center justify-center rounded-md bg-orange-500 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
-                                            onClick={() =>
-                                                router.push('/user/order')
-                                            }
-                                        >
-                                            Place Order
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="group-hover:ml-8 ml-4 h-6 w-6 transition-all"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
+                                        <>
+                                            <div className="flex items-center justify-center mt-6 space-y-3 border-t border-b py-8">
+                                                <KeepShopping />
+                                            </div>
+                                            <button
+                                                type="button"
+                                                className="group inline-flex w-full items-center justify-center rounded-md bg-orange-500 px-6 py-4 text-lg font-semibold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
+                                                onClick={() =>
+                                                    router.push('/user/order')
+                                                }
                                             >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                                />
-                                            </svg>
-                                        </button>
+                                                Place Order
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="group-hover:ml-8 ml-4 h-6 w-6 transition-all"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                    strokeWidth={2}
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </>
                                     )}
                                 </div>
                             </div>

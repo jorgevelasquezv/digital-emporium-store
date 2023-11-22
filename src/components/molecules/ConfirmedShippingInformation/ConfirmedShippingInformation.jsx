@@ -1,3 +1,4 @@
+import { KeepShopping } from '@/components/atoms/KeepShopping/KeepShopping';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -101,6 +102,11 @@ export const ConfirmedShippingInformation = () => {
                     </p>
                 </div>
             </div>
+
+            <div className="flex items-center justify-center mt-6 space-y-3 border-t border-b py-8">
+                <KeepShopping />
+            </div>
+            
             <div className="space-y-3 border-t border-b py-8 flex justify-evenly">
                 <div className="my-1 flex items-center justify-center">
                     <label className="">
@@ -119,6 +125,7 @@ export const ConfirmedShippingInformation = () => {
                         />
                     </label>
                 </div>
+
                 <div className="my-1 flex items-center justify-center">
                     <label className="">
                         <input
@@ -136,6 +143,7 @@ export const ConfirmedShippingInformation = () => {
                         />
                     </label>
                 </div>
+
                 <div className="my-1 flex items-center justify-center">
                     <label className="">
                         <input
