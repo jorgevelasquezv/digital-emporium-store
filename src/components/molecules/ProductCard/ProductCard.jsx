@@ -5,6 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { setUserCar } from '@/app/GlobalRedux/features/userSlice';
 
+import Swal from 'sweetalert2';
+
+import { ButtonCart } from '@/components/atoms/ButtonCart/ButtonCart';
+
 export const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
 
@@ -16,7 +20,7 @@ export const ProductCard = ({ product }) => {
 
     const { id, name, description, stock, price, url } = product;
 
-    const handleButtonAddCar = () => {
+    const handleButtonAddCart = () => {
         if (!isAutenticated) {
             router.replace('/signin');
             return;
@@ -28,7 +32,15 @@ export const ProductCard = ({ product }) => {
 
         const carProducts = { ...userCar, ...productToAdd };
 
-        dispatch(setUserCar({...carProducts}));
+        dispatch(setUserCar({ ...carProducts }));
+        
+        Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Product added to your shopping cart',
+            showConfirmButton: true,
+            timer: 3000,
+        });
     };
 
     const handleSetQuantity = (e) => {
@@ -56,8 +68,7 @@ export const ProductCard = ({ product }) => {
                 See more...
             </Link>
             <p className="text-sm font-semibold mt-2">
-                Existencias{' '}
-                <span className="text-lg text-gray-500">{stock}</span>
+                Stock <span className="text-lg text-gray-500">{stock}</span>
             </p>
             <p className="text-blue-600 font-semibold mt-2">Price ${price}</p>
             <div className="flex flex-col ">
@@ -87,36 +98,35 @@ export const ProductCard = ({ product }) => {
                     <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none">
                         {quantity}
                     </div>
-                    <button
-                        className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
-                        onClick={handleSetQuantity}
-                        id="plus"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-4"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                    <div>
+                        <button
+                            className="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
+                            onClick={handleSetQuantity}
                             id="plus"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 4v16m8-8H4"
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
                                 id="plus"
-                            />
-                        </svg>
-                    </button>
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 4v16m8-8H4"
+                                    id="plus"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
-                <button
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md mt-4"
-                    onClick={handleButtonAddCar}
-                >
-                    Añadir al carrito
-                </button>
+                <div className="mt-4 flex flex-col">
+                    <ButtonCart handleButtonAddCart={handleButtonAddCart} />
+                </div>
             </div>
         </article>
     );
