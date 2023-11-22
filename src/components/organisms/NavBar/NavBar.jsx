@@ -75,7 +75,7 @@ export const NavBar = () => {
                     <NavBarItemsMobile items={itemsCenter} />
                 </div>
             </nav>
-            {(search.length > 0 && pathName == '') && <AdvanceSearch />}
+            {(search && pathName == '') && <AdvanceSearch />}
         </>
     );
 };

@@ -4,7 +4,7 @@ import {
     setSearch,
 } from '@/app/GlobalRedux/features/productsSlice';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useSearch = () => {
@@ -42,6 +42,12 @@ export const useSearch = () => {
             handleSearch();
         }
     };
+
+useEffect(() => {
+    dispatch(setSearch(searchWord));
+}, []);
+
+
     return [
         searchWord,
         handleSearch,
