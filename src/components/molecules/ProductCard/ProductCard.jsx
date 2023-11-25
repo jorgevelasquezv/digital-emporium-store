@@ -18,22 +18,34 @@ export const ProductCard = ({ product }) => {
 
     const router = useRouter();
 
-    const { id, name, description, stock, price, url, stok } = product;
+    const { id, name, description, stock, price, url } = product;
 
     const handleButtonAddCart = () => {
         if (!isAutenticated) {
             router.replace('/signin');
             return;
         }
-        
+
         const quantityFound = userCar[id]?.quantity || 0;
+
+        const productToAdd = {};
         
-        const productToAdd = { [id]: { ...product, quantity: quantityFound + quantity } };
+        if (stock >= quantityFound + quantity) {
+            productToAdd[id] = {
+                ...product,
+                quantity: quantityFound + quantity,
+            };
+        } else {
+            productToAdd[id] = {
+                ...product,
+                quantity: stock,
+            };
+        }
 
         const carProducts = { ...userCar, ...productToAdd };
 
         dispatch(setUserCar({ ...carProducts }));
-        
+
         Swal.fire({
             position: 'center',
             icon: 'info',

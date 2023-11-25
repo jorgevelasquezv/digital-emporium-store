@@ -118,6 +118,9 @@ export default function Car() {
                                                                             modelNumber
                                                                         }
                                                                     </p>
+                                                                    <p className="text-base font-semibold text-gray-900">
+                                                                        ${price}
+                                                                    </p>
                                                                 </div>
                                                                 <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
                                                                     <p className="shrink-0 w-20 text-base font-extrabold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">

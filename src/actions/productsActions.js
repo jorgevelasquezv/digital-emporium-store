@@ -28,7 +28,6 @@ export const getProductById = (id) => {
         );
 };
 
-
 export const getCategories =  () => {
     return axios
         .get(
@@ -38,6 +37,17 @@ export const getCategories =  () => {
             const { products } = data;
             const categories = products.map((product) => product.category);
             return categories;
+        })
+        .catch((error) =>
+            console.error('Error al obtener los datos de la API:', error)
+        );
+};
+
+export const updateProducts = (products) => {
+    return axios
+        .put('http://localhost:8000/products', products)
+        .then(({ data }) => {
+            return data;
         })
         .catch((error) =>
             console.error('Error al obtener los datos de la API:', error)

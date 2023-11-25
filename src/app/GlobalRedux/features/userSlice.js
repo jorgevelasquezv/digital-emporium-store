@@ -21,6 +21,7 @@ export const userSlices = createSlice({
         },
         userCar: {},
         confirmedShippingInformation: false,
+        orders: [],
     },
     reducers: {
         setIsAutenticate: (state, action) => {
@@ -44,6 +45,9 @@ export const userSlices = createSlice({
         setConfirmedShippingInformation: (state, action) => {
             state.confirmedShippingInformation = action.payload;
         },
+        setOrders: (state, action) => {
+            state.orders = action.payload;
+        },
     },
 });
 
@@ -55,6 +59,7 @@ export const {
     setUserInformation,
     setUserCar,
     setConfirmedShippingInformation,
+    setOrders,
 } = userSlices.actions;
 
 export default userSlices.reducer;

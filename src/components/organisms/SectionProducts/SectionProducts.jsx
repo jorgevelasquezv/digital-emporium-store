@@ -20,23 +20,27 @@ export const SectionProducts = () => {
                 }
             >
                 {search.length > 0 && productsFound.length > 0 ? (
-                    productsFound.map((product) => (
-                        <ProductCard
-                            product={product}
-                            key={`${product.name}-${product.price}`}
-                        />
-                    ))
+                    productsFound
+                        .filter((product) => product.stock > 0)
+                        .map((product) => (
+                            <ProductCard
+                                product={product}
+                                key={`${product.name}-${product.price}`}
+                            />
+                        ))
                 ) : search.length > 0 && productsFound.length == 0 ? (
                     <p className="text-center text-gray-700 text-7xl font-extrabold">
                         Could not find products
                     </p>
                 ) : (
-                    data.map((product) => (
-                        <ProductCard
-                            product={product}
-                            key={`${product.name}-${product.price}`}
-                        />
-                    ))
+                    data
+                        .filter((product) => product.stock > 0)
+                        .map((product) => (
+                            <ProductCard
+                                product={product}
+                                key={`${product.name}-${product.price}`}
+                            />
+                        ))
                 )}
             </section>
         </PersistGate>

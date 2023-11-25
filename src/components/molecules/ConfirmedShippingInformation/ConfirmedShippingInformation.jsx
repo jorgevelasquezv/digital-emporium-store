@@ -1,9 +1,15 @@
+import { updateProducts } from '@/actions/productsActions';
+import { setConfirmedShippingInformation, setOrders, setUserCar } from '@/app/GlobalRedux/features/userSlice';
 import { KeepShopping } from '@/components/atoms/KeepShopping/KeepShopping';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
 export const ConfirmedShippingInformation = () => {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
     const [paymentMethods, setPaymentMethods] = useState({
         payPal: true,
         pse: false,
@@ -11,7 +17,14 @@ export const ConfirmedShippingInformation = () => {
     });
 
     const { payPal, pse, creditCard } = paymentMethods;
-    const { userInformation } = useSelector((state) => state.users);
+    const { userInformation, userCar } = useSelector((state) => state.users);
+
+    const products = Object.values(userCar);
+    const productsToBuy = products.map((product) => {
+        const { stock, quantity, ...rest } = product;
+        rest.stock = stock - quantity;
+        return rest;
+    });
 
     const { firstName, lastName, country, address, city, province, zipPostal } =
         userInformation;
@@ -37,18 +50,25 @@ export const ConfirmedShippingInformation = () => {
         });
     };
 
-    const handlePaymentMethod = () => {
+    const handlePaymentMethod = async () => {
         const activePaymentMethod = Object.entries(paymentMethods)
             .filter(([_, value]) => value)
-            .map(([item]) => item);
-        
+            .map(([item]) => item.toUpperCase());
+
+        dispatch(setOrders(products));
+        dispatch(setUserCar({}));
+        dispatch(setConfirmedShippingInformation(false));
+        await updateProducts(productsToBuy);
+
         Swal.fire({
             position: 'center',
             icon: 'info',
-            title: `The payment functionality by ${activePaymentMethod} will soon be enabled`,
+            title: `The payment made through ${activePaymentMethod} was successful`,
             showConfirmButton: true,
             timer: 5000,
         });
+
+        router.push('/user/orderShipped')
     };
 
     return (
@@ -106,7 +126,7 @@ export const ConfirmedShippingInformation = () => {
             <div className="flex items-center justify-center mt-6 space-y-3 border-t border-b py-8">
                 <KeepShopping />
             </div>
-            
+
             <div className="space-y-3 border-t border-b py-8 flex justify-evenly">
                 <div className="my-1 flex items-center justify-center">
                     <label className="">

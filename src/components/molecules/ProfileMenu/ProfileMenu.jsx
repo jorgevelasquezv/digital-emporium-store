@@ -6,9 +6,7 @@ import { useLogout } from '@/hooks/useLogout';
 export const ProfileMenu = ({ handleHiddenMenuUser, buttonMenuUser }) => {
     const { handleLogout } = useLogout();
 
-    const firebaseDataUser = useSelector(
-        (state) => state.users.firebaseDataUser
-    );
+    const { firebaseDataUser, orders } = useSelector((state) => state.users);
 
     const avatar = `https://ui-avatars.com/api/?name=${firebaseDataUser.displayName.trim()}`;
 
@@ -51,6 +49,16 @@ export const ProfileMenu = ({ handleHiddenMenuUser, buttonMenuUser }) => {
                     >
                         Your Profile
                     </Link>
+                    {orders.length > 0 && <Link
+                        href="/user/orderShipped"
+                        className="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                        tabIndex={-1}
+                        id="user-menu-item-0"
+                        onClick={handleHiddenMenuUser}
+                    >
+                        Your Order
+                    </Link>}
                     <Link
                         href="/"
                         className="block px-4 py-2 text-sm text-gray-700"

@@ -53,9 +53,19 @@ const ProductTest = ({ params }) => {
 
         const quantityFound = userCar[id]?.quantity || 0;
 
-        const productToAdd = {
-            [id]: { ...product, quantity: quantityFound + quantity },
-        };
+        const productToAdd = {};
+
+        if (stock >= quantityFound + quantity) {
+            productToAdd[id] = {
+                ...product,
+                quantity: quantityFound + quantity,
+            };
+        } else {
+            productToAdd[id] = {
+                ...product,
+                quantity: stock,
+            };
+        }
 
         const carProducts = { ...userCar, ...productToAdd };
 
@@ -148,7 +158,9 @@ const ProductTest = ({ params }) => {
                                         ${price}
                                     </h2>
                                 </div>
-                                <ButtonCart handleButtonAddCart={handleButtonAddCart} />
+                                <ButtonCart
+                                    handleButtonAddCart={handleButtonAddCart}
+                                />
                             </div>
                             <ul className="mt-8 space-y-2">
                                 <li className="flex items-center text-left text-sm font-medium text-gray-600">
