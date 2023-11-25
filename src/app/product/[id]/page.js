@@ -73,7 +73,7 @@ const ProductTest = ({ params }) => {
     const handleSetQuantity = (e) => {
         const { id } = e.target;
         console.log({ ...product, quantity });
-        id === 'plus' && setQuantity(quantity + 1);
+        id === 'plus' && quantity < stock && setQuantity(quantity + 1);
         id === 'minus' && quantity > 1 && setQuantity(quantity - 1);
     };
 

@@ -18,7 +18,7 @@ export const ProductCard = ({ product }) => {
 
     const router = useRouter();
 
-    const { id, name, description, stock, price, url } = product;
+    const { id, name, description, stock, price, url, stok } = product;
 
     const handleButtonAddCart = () => {
         if (!isAutenticated) {
@@ -45,7 +45,7 @@ export const ProductCard = ({ product }) => {
 
     const handleSetQuantity = (e) => {
         const { id } = e.target;
-        id === 'plus' && setQuantity(quantity + 1);
+        id === 'plus' && quantity < stock && setQuantity(quantity + 1);
         id === 'minus' && quantity > 1 && setQuantity(quantity - 1);
     };
 
