@@ -137,11 +137,11 @@ export const FormRegister = () => {
                 </p>
                 <p className="text-center mt-3 text-[14px]">
                     By clicking continue, you agree to our
-                    <Link href="/terms" className="text-gray-600">
+                    <Link href="/privacy-policy" className="text-gray-600">
                         Terms of Service
                     </Link>{' '}
                     and{' '}
-                    <Link href="/privacy" className="text-gray-600">
+                    <Link href="/privacy-policy" className="text-gray-600">
                         Privacy Policy
                     </Link>
                     .

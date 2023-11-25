@@ -8,10 +8,10 @@ import { persistor } from '@/app/GlobalRedux/store';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-const page = () => {
+const Order = () => {
     const router = useRouter();
 
-    const { isAutenticated, userCar, orders, userInformation } = useSelector(
+    const { isAutenticated, orders, userInformation } = useSelector(
         (state) => state.users
     );
 
@@ -196,4 +196,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Order;

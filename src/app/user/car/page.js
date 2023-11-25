@@ -42,10 +42,10 @@ export default function Car() {
 
         const carProducts = { ...userCar };
         const produductToModify = { ...carProducts[idProduct] };
-        const { quantity } = produductToModify;
+        const { quantity, stock } = produductToModify;
 
         produductToModify.quantity =
-            id === 'plus'
+            id === 'plus' && quantity < stock 
                 ? quantity + 1
                 : id === 'minus' && quantity > 1
                 ? quantity - 1

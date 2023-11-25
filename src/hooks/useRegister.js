@@ -38,6 +38,13 @@ export const useRegister = () => {
                 dispatch(setIsAutenticate(true));
                 dispatch(setFirabaseAccesToken(accessToken));
                 dispatch(setFirabaseDataUser({ email, displayName, uid }));
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Successful registration has been completed',
+                    showConfirmButton: true,
+                    timer: 5000,
+                });
                 return router.replace('/');
             })
             .catch(() => {

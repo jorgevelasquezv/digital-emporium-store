@@ -6,7 +6,7 @@ import {
     setProductsFound,
 } from '@/app/GlobalRedux/features/productsSlice';
 import { persistor } from '@/app/GlobalRedux/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
@@ -16,13 +16,28 @@ export const AdvanceSearch = () => {
     const { data, search, categories, productsBySearch } = useSelector(
         (state) => state.products
     );
+
     const dropCategories = [
-        ...categories.map((category) => ({ name: category, value: true })),
+        ...categories.map((category) => ({ name: category, value: false })),
     ];
+
+    const [priceRange, setPriceRange] = useState([]);
+
+    const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+
+    const [showPriceDropdown, setShowPriceDropdown] = useState(false);
+
+    const [categoryValues, setCategoryValues] = useState(dropCategories);
+
+    const [categoryAll, setCategoryAll] = useState(false);
+
+    const [podructsFiltered, setPodructsFiltered] = useState(productsBySearch);
+
     const priceList = () => {
         const priceRangeList = [
-            ...new Set(productsBySearch.map((product) => product.price)),
+            ...new Set(podructsFiltered.map((product) => product.price)),
         ].sort((a, b) => a - b);
+
         const price = {
             min: priceRangeList[0],
             max: priceRangeList[priceRangeList.length - 1],
@@ -32,22 +47,17 @@ export const AdvanceSearch = () => {
         const arr = [1, 2, 3, 4];
         const prices = [
             price.max,
-            ...arr.map(() => Math.trunc((price.range -= range))),
+            ...arr.map(() => {
+                if ((price.range - range) > price.min){
+                    return Math.trunc((price.range -= range));
+                }
+                return Math.trunc(price.min + (price.min / 3.8));
+            }),
             price.min,
         ].map((element) => ({ name: element, value: false }));
         prices[0].value = true;
         return prices;
     };
-
-    const [priceRange, setPriceRange] = useState(priceList());
-
-    const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-
-    const [showPriceDropdown, setShowPriceDropdown] = useState(false);
-
-    const [categoryValues, setCategoryValues] = useState(dropCategories);
-
-    const [categoryAll, setCategoryAll] = useState(true);
 
     const handleShowCategoryDropdown = () => {
         setShowCategoryDropdown(!showCategoryDropdown);
@@ -86,6 +96,7 @@ export const AdvanceSearch = () => {
 
         dispatch(setProductsFound(productsSeleted));
         dispatch(setProductsFilterByCategory(productsSeleted));
+        setPodructsFiltered(productsSeleted);
     };
 
     const handlePriceRangeValue = (name) => {
@@ -99,7 +110,7 @@ export const AdvanceSearch = () => {
             })
         );
         const priceSelected = prices.filter(({ value }) => value)[0]?.name;
-        const productsByPrice = productsBySearch.filter(
+        const productsByPrice = podructsFiltered.filter(
             ({ price }) => price <= priceSelected
         );
         dispatch(setProductsFilteredByPrice(productsByPrice));
@@ -117,11 +128,12 @@ export const AdvanceSearch = () => {
         handleCategoryValues('');
     };
 
+    useEffect(() => {
+        setPriceRange(priceList());
+    }, [podructsFiltered]);
+
     return (
-        <PersistGate
-            loading={null}
-            persistor={persistor}
-        >
+        <PersistGate loading={null} persistor={persistor}>
             <nav className="bg-blue-800 sticky top-16 z-0">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center">
