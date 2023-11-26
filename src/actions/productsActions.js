@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
+
+const HOST = process.env.NEXT_PUBLIC_END_POINT_API;
 
 export const getProducts = () => {
-    return  axios
-        .get(
-            'http://localhost:8000/products'
-        )
+    return axios
+        .get(HOST)
         .then(({ data }) => {
             return data;
         })
@@ -15,12 +15,10 @@ export const getProducts = () => {
 
 export const getProductById = (id) => {
     return axios
-        .get(
-            'http://localhost:8000/products'
-        )
+        .get(HOST)
         .then(({ data }) => {
             const { products } = data;
-            const product = products.filter(product => product.id === id)[0]
+            const product = products.filter((product) => product.id === id)[0];
             return product;
         })
         .catch((error) =>
@@ -28,11 +26,9 @@ export const getProductById = (id) => {
         );
 };
 
-export const getCategories =  () => {
+export const getCategories = () => {
     return axios
-        .get(
-            'http://localhost:8000/products'
-        )
+        .get(HOST)
         .then(({ data }) => {
             const { products } = data;
             const categories = products.map((product) => product.category);
@@ -45,7 +41,7 @@ export const getCategories =  () => {
 
 export const updateProducts = (products) => {
     return axios
-        .put('http://localhost:8000/products', products)
+        .put(HOST, products)
         .then(({ data }) => {
             return data;
         })

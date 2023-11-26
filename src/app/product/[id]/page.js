@@ -115,7 +115,7 @@ const ProductTest = ({ params }) => {
                             </div>
                         </div>
                         <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-                            <h2 className="sm: text-2xl font-bold text-gray-900 sm:text-3xl">
+                            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
                                 {name.split(' - ')[1]}
                             </h2>
 
@@ -176,7 +176,6 @@ const ProductTest = ({ params }) => {
                                             strokeLinejoin="round"
                                             strokeWidth={2}
                                             d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                            className
                                         />
                                     </svg>
                                     Free shipping worldwide
@@ -194,7 +193,6 @@ const ProductTest = ({ params }) => {
                                             strokeLinejoin="round"
                                             strokeWidth={2}
                                             d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                                            className
                                         />
                                     </svg>
                                     Cancel Anytime
