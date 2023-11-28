@@ -3,23 +3,29 @@ const fs = require('fs');
 const inventory = require('../../../library/products.json');
 
 export async function GET() {
-    return Response.json(inventory);
+    return new Response(inventory, {
+        status: 200,
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        },
+    });
 }
 
 export async function PUT(request) {
     const purchasedProducts = await request.json();
-    const {products} = inventory;
-    const updateProducts =  products.map(product => {
-        purchasedProducts.map(purchasedProduct => {
-            if(product.id === purchasedProduct.id) {
+    const { products } = inventory;
+    const updateProducts = products.map((product) => {
+        purchasedProducts.map((purchasedProduct) => {
+            if (product.id === purchasedProduct.id) {
                 product.stock = purchasedProduct.stock;
             }
-        })
+        });
         return product;
-    })
+    });
 
     inventory.products = updateProducts;
-    
+
     fs.writeFile(
         'src/library/products.json',
         JSON.stringify(inventory),
@@ -29,5 +35,11 @@ export async function PUT(request) {
         }
     );
 
-    return Response.json(updateProducts);
+    return new Response(updateProducts, {
+        status: 200,
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        },
+    });
 }
