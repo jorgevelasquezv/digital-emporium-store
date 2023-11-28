@@ -7,7 +7,7 @@ import { Spinners } from '@/components/molecules/Spinners/Spinners';
 import { persistor } from '@/app/GlobalRedux/store';
 
 export const SectionProducts = () => {
-    const { productsFound, data, search } = useSelector(
+    const { productsFound, data = [], search } = useSelector(
         (state) => state.products
     );
     return (
