@@ -3,11 +3,11 @@ const fs = require('fs');
 const inventory = require('../../../library/products.json');
 
 export async function GET() {
-    return new Response(inventory, {
+    return new Response(JSON.stringify(inventory), {
         status: 200,
         headers: {
-            'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
         },
     });
 }
@@ -35,11 +35,11 @@ export async function PUT(request) {
         }
     );
 
-    return new Response(updateProducts, {
+    return new Response(JSON.stringify(updateProducts), {
         status: 200,
         headers: {
-            'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
         },
     });
 }
