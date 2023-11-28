@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { Search } from '../Search/Search';
+import { useLogout } from '@/hooks/useLogout';
 
 export const NavBarItemsMobile = ({ items }) => {
-    const pathname = usePathname();
+    const { isAutenticated, pathname, handleLogout } = useLogout();
     const classNameActive =
         'bg-blue-900 text-white hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium';
     const classNameInactive =
@@ -22,6 +22,38 @@ export const NavBarItemsMobile = ({ items }) => {
                     {name}
                 </Link>
             ))}
+            {!isAutenticated ? (
+                <>
+                    <Link
+                        href="/signin"
+                        className={
+                            '/signin' === pathname
+                                ? classNameActive
+                                : classNameInactive
+                        }
+                    >
+                        Signin
+                    </Link>
+                    <Link
+                        href="/register"
+                        className={
+                            '/register' === pathname
+                                ? classNameActive
+                                : classNameInactive
+                        }
+                    >
+                        Register
+                    </Link>
+                </>
+            ) : (
+                <button
+                    href="#"
+                    className={classNameInactive}
+                    onClick={handleLogout}
+                >
+                    Logout
+                </button>
+            )}
             <Search site={'relative mx-auto text-gray-600 px-3 py-2'} />
         </div>
     );

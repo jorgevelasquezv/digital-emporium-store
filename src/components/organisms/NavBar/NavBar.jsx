@@ -49,8 +49,10 @@ export const NavBar = () => {
                         <NavBarItemsDesktop items={itemsCenter} />
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                             <Search />
-                            <PersistGate loading={<NavBarItemsRightDefault/>} persistor={persistor}>
-                            
+                            <PersistGate
+                                loading={<NavBarItemsRightDefault />}
+                                persistor={persistor}
+                            >
                                 <NavbarItemsRight />
                                 {isAutenticated && (
                                     <>
@@ -68,14 +70,19 @@ export const NavBar = () => {
                     </div>
                 </div>
                 {/* Mobile menu, show/hide based on menu state. */}
-                <div
-                    className={buttonMobileMenu ? 'sm:hidden' : 'hidden'}
-                    id="mobile-menu"
+                <PersistGate
+                    loading={null}
+                    persistor={persistor}
                 >
-                    <NavBarItemsMobile items={itemsCenter} />
-                </div>
+                    <div
+                        className={buttonMobileMenu ? 'sm:hidden' : 'hidden'}
+                        id="mobile-menu"
+                    >
+                        <NavBarItemsMobile items={itemsCenter} />
+                    </div>
+                </PersistGate>
             </nav>
-            {(search && pathName == '') && <AdvanceSearch />}
+            {search && pathName == '' && <AdvanceSearch />}
         </>
     );
 };
