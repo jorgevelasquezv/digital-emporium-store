@@ -6,12 +6,14 @@ import {
     setProductsFound,
 } from '@/app/GlobalRedux/features/productsSlice';
 import { persistor } from '@/app/GlobalRedux/store';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
 export const AdvanceSearch = () => {
     const dispatch = useDispatch();
+
+    const wrapperRef = useRef(null);
 
     const { data, search, categories, productsBySearch } = useSelector(
         (state) => state.products
@@ -132,11 +134,40 @@ export const AdvanceSearch = () => {
         setPriceRange(priceList());
     }, [podructsFiltered]);
 
+    const onOutsideClick = () => {
+        // Realiza las acciones que desees cuando se haga clic fuera del elemento
+        setShowPriceDropdown(false);
+        setShowCategoryDropdown(false);
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            // Comprueba si el clic ocurrió fuera del elemento
+            if (
+                wrapperRef.current &&
+                !wrapperRef.current.contains(event.target)
+            ) {
+                onOutsideClick();
+            }
+        };
+
+        // Agrega un event listener al documento para detectar clics fuera del elemento
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        // Limpia el event listener cuando el componente se desmonta
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [onOutsideClick]);
+
     return (
         <PersistGate loading={null} persistor={persistor}>
             <nav className="bg-blue-800 sticky top-16 z-0">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                    <div className="relative flex h-16 items-center">
+                    <div
+                        className="relative flex h-16 items-center"
+                        ref={wrapperRef}
+                    >
                         {/* Categories */}
                         <div className="relative inline-block text-left mr-8">
                             <div>

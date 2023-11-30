@@ -66,29 +66,44 @@ export const useRegister = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
+
+        const titles = [];
+
         if (
             email.trim() === '' ||
             !email.trim().includes('@', 1 - email.length) ||
             !email.trim().includes('.', email.indexOf('@') + 1) ||
             email.trim().slice(email.trim().indexOf('.')).length < 3
         ) {
-            return;
+            titles.push('Email is not valid');
         }
-        if (
-            username.trim().length < 2 ||
-            password.trim().length < 6 ||
-            password.trim() !== password2.trim()
-        ) {
+
+        const alert = (title) => {
             setData({ ...data, password: '', password2: '' });
             Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'error',
-                title: 'Password does not match',
+                title,
                 showConfirmButton: true,
                 timer: 5000,
             });
-            return;
+        };
+
+        
+
+        if (username.trim().length < 2) {
+            titles.push('Username must be at least 2 characters');
         }
+        if (password.trim().length < 6) {
+            titles.push('Password must be at least 6 characters');
+        }
+        if (password.trim() !== password2.trim()) {
+            titles.push('Password does not match');
+        }
+        if (titles.length > 0) {
+            return alert(titles.join(', '));
+        }
+        
         register(email, password, username);
     };
 
